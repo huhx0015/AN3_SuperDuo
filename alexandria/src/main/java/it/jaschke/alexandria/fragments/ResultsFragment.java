@@ -26,11 +26,8 @@ public class ResultsFragment extends Fragment {
     // LOGGING VARIABLES
     private static final String LOG_TAG = ResultsFragment.class.getSimpleName();
 
-    // NARRATION VARIABLES
-    private TextToSpeech speechInstance;
-
     // VIEW INJECTION VARIABLES
-    @Bind(R.id.ap_results_upc_text) TextView results_upc_text;
+    @Bind(R.id.results_upc_text) TextView results_upc_text;
 
     /** INITIALIZATION METHODS _________________________________________________________________ **/
 
@@ -63,12 +60,12 @@ public class ResultsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View ap_results_view = (ViewGroup) inflater.inflate(R.layout.fragment_results, container, false);
-        ButterKnife.bind(this, ap_results_view); // ButterKnife view injection initialization.
+        View results_view = (ViewGroup) inflater.inflate(R.layout.fragment_results, container, false);
+        ButterKnife.bind(this, results_view); // ButterKnife view injection initialization.
 
         setUpLayout(); // Sets up the layout for the fragment.
 
-        return ap_results_view;
+        return results_view;
     }
 
     // onDestroyView(): This function runs when the screen is no longer visible and the view is

@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="UPC CODE"
-        android:id="@+id/ap_results_upc_text"
+        android:id="@+id/results_upc_text"
         android:layout_gravity="center"
         android:textColor="@android:color/black"
         android:textSize="24sp"
