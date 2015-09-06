@@ -37,4 +37,4 @@ Criteria:
 	
 * Football Scores also support a collection widget.
 	
-& Strings are all included in the strings.xml file and untranslatable strings have a translatable tag marked to false.
+* Strings are all included in the strings.xml file and untranslatable strings have a translatable tag marked to false.
