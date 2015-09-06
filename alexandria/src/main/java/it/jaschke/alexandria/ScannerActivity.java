@@ -1,7 +1,7 @@
 package it.jaschke.alexandria;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -28,7 +28,7 @@ import com.mirasense.scanditsdk.interfaces.ScanditSDKScanSession;
  * See the License for the specific language governing premissions and
  * limitations under the License.
  */
-public class ScannerActivity extends Activity implements ScanditSDKOnScanListener {
+public class ScannerActivity extends AppCompatActivity implements ScanditSDKOnScanListener {
 
     // The main object for recognizing a displaying barcodes.
     private ScanditSDK mBarcodePicker;
