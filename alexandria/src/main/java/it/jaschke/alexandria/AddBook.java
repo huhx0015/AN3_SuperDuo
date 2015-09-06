@@ -21,11 +21,13 @@ import android.widget.Toast;
 
 
 import it.jaschke.alexandria.data.AlexandriaContract;
+import it.jaschke.alexandria.fragments.ResultsFragment;
+import it.jaschke.alexandria.interfaces.OnScanResultsListener;
 import it.jaschke.alexandria.services.BookService;
 import it.jaschke.alexandria.services.DownloadImage;
 
 
-public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>, OnScanResultsListener {
     private static final String TAG = "INTENT_TO_SCAN_ACTIVITY";
     private EditText ean;
     private final int LOADER_ID = 1;
@@ -37,10 +39,9 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     private String mScanFormat = "Format:";
     private String mScanContents = "Contents:";
 
+    private Boolean showFragment = false; // Used to determine if the fragment is currently being shown or not.
 
-
-    public AddBook(){
-    }
+    public AddBook(){}
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -203,5 +204,24 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         activity.setTitle(R.string.scan);
+    }
+
+    /** INTERFACE METHODS ______________________________________________________________________ **/
+
+    @Override
+    public void displayResultsFragment(String upc, Boolean isDisplay) {
+
+        // Displays the ResultsFragment view only if the fragment is not being shown.
+        if (isDisplay && !showFragment) {
+            showFragment = true;
+            ResultsFragment resultsFragment = new ResultsFragment();
+            resultsFragment.initializeFragment(upc);
+            // TODO: Setup fragment here.
+        }
+
+        // Hides the ResultsFragment view.
+        else {
+            // TODO: Remove fragment here.
+        }
     }
 }
