@@ -1,1 +1,1 @@
-include ':app', ':football_scores', ':alexandria'
+include ':football_scores', ':alexandria'

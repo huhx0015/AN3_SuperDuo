@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AN3_SuperDuo.iml" filepath="$PROJECT_DIR$/AN3_SuperDuo.iml" />
       <module fileurl="file://$PROJECT_DIR$/alexandria/alexandria.iml" filepath="$PROJECT_DIR$/alexandria/alexandria.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/football_scores/football_scores.iml" filepath="$PROJECT_DIR$/football_scores/football_scores.iml" />
     </modules>
   </component>
