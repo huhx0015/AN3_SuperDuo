@@ -1,4 +1,4 @@
-package it.jaschke.alexandria;
+package it.jaschke.alexandria.fragments;
 
 import android.app.Activity;
 import android.content.Context;
@@ -14,22 +14,25 @@ import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import it.jaschke.alexandria.R;
+import it.jaschke.alexandria.activities.ScannerActivity;
 import it.jaschke.alexandria.data.AlexandriaContract;
-import it.jaschke.alexandria.fragments.ResultsFragment;
 import it.jaschke.alexandria.interfaces.OnScanResultsListener;
 import it.jaschke.alexandria.services.BookService;
 import it.jaschke.alexandria.services.DownloadImage;
 
 
 public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>, OnScanResultsListener {
+
     private static final String TAG = "INTENT_TO_SCAN_ACTIVITY";
-    private EditText ean;
     private final int LOADER_ID = 1;
     private View rootView;
     private final String EAN_CONTENT="eanContent";
@@ -40,6 +43,15 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     private String mScanContents = "Contents:";
 
     private Boolean showFragment = false; // Used to determine if the fragment is currently being shown or not.
+
+    private static final int SCAN_BARCODE_RESULTS = 1337;
+    private static final String SCAN_RESULTS = "SCAN_RESULTS";
+
+    @Bind(R.id.delete_button) Button deleteButton;
+    @Bind(R.id.scan_button) Button scanButton;
+    @Bind(R.id.search_button) Button searchButton;
+    @Bind(R.id.save_button) Button saveButton;
+    @Bind(R.id.ean) EditText ean;
 
     public AddBook(){}
 
@@ -55,7 +67,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.fragment_add_book, container, false);
-        ean = (EditText) rootView.findViewById(R.id.ean);
+        ButterKnife.bind(this, rootView);
 
         ean.addTextChangedListener(new TextWatcher() {
             @Override
@@ -70,12 +82,12 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
 
             @Override
             public void afterTextChanged(Editable s) {
-                String ean =s.toString();
+                String ean = s.toString();
                 //catch isbn10 numbers
-                if(ean.length()==10 && !ean.startsWith("978")){
-                    ean="978"+ean;
+                if (ean.length() == 10 && !ean.startsWith("978")) {
+                    ean = "978" + ean;
                 }
-                if(ean.length()<13){
+                if (ean.length() < 13) {
                     clearFields();
                     return;
                 }
@@ -88,7 +100,17 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
             }
         });
 
-        rootView.findViewById(R.id.scan_button).setOnClickListener(new View.OnClickListener() {
+        scanButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), ScannerActivity.class);
+                startActivityForResult(i, SCAN_BARCODE_RESULTS);
+            }
+        });
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 // This is the callback method that the system will invoke when your button is
@@ -107,14 +129,14 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
             }
         });
 
-        rootView.findViewById(R.id.save_button).setOnClickListener(new View.OnClickListener() {
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ean.setText("");
             }
         });
 
-        rootView.findViewById(R.id.delete_button).setOnClickListener(new View.OnClickListener() {
+        deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent bookIntent = new Intent(getActivity(), BookService.class);
@@ -131,6 +153,26 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
         }
 
         return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == SCAN_BARCODE_RESULTS && resultCode == Activity.RESULT_OK) {
+
+            if (data != null) {
+                Bundle bundle = data.getExtras();
+                String barcodeMessage = bundle.getString(SCAN_RESULTS);
+                ean.setText(barcodeMessage);
+            }
+        }
     }
 
     private void restartLoader(){

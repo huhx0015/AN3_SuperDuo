@@ -1,4 +1,4 @@
-package it.jaschke.alexandria;
+package it.jaschke.alexandria.activities;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -17,6 +17,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import it.jaschke.alexandria.fragments.About;
+import it.jaschke.alexandria.fragments.AddBook;
+import it.jaschke.alexandria.fragments.BookDetail;
+import it.jaschke.alexandria.fragments.ListOfBooks;
+import it.jaschke.alexandria.ui.NavigationDrawerFragment;
+import it.jaschke.alexandria.R;
 import it.jaschke.alexandria.api.Callback;
 
 

@@ -1,5 +1,6 @@
-package it.jaschke.alexandria;
+package it.jaschke.alexandria.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
@@ -10,6 +11,8 @@ import com.mirasense.scanditsdk.interfaces.ScanditSDK;
 import com.mirasense.scanditsdk.interfaces.ScanditSDKCode;
 import com.mirasense.scanditsdk.interfaces.ScanditSDKOnScanListener;
 import com.mirasense.scanditsdk.interfaces.ScanditSDKScanSession;
+
+import it.jaschke.alexandria.R;
 
 /**
  * Simple demo application illustrating the use of the Scandit SDK.
@@ -37,9 +40,17 @@ public class ScannerActivity extends AppCompatActivity implements ScanditSDKOnSc
     // Your Scandit SDK App key is available via your Scandit SDK web account.
     public String sScanditSdkAppKey = "ITS-A-SECRET!";
 
+    private static final String SCAN_RESULTS = "SCAN_RESULTS";
+
     Toast mToast = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        // Switch to full screen.
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         super.onCreate(savedInstanceState);
 
         // Retrieves Scandit SDK key from the secret XML.
@@ -69,10 +80,6 @@ public class ScannerActivity extends AppCompatActivity implements ScanditSDKOnSc
      * Initializes and starts the bar code scanning.
      */
     public void initializeAndStartBarcodeScanning() {
-        // Switch to full screen.
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         // We instantiate the automatically adjusting barcode picker that will
         // choose the correct picker to instantiate. Be aware that this picker
@@ -114,6 +121,12 @@ public class ScannerActivity extends AppCompatActivity implements ScanditSDKOnSc
         }
         mToast = Toast.makeText(this, message, Toast.LENGTH_LONG);
         mToast.show();
+
+        // Finishes activity and returns to the previous activity.
+        Intent scanResults = new Intent();
+        scanResults.putExtra(SCAN_RESULTS, message);
+        setResult(RESULT_OK, scanResults);
+        finish();
     }
 
     @Override

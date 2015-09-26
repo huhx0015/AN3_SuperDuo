@@ -73,6 +73,7 @@ public class myFetchService extends IntentService
                 // Nothing to do.
                 return;
             }
+
             reader = new BufferedReader(new InputStreamReader(inputStream));
 
             String line;
