@@ -4,12 +4,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,17 +20,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import it.jaschke.alexandria.R;
 import it.jaschke.alexandria.activities.ScannerActivity;
 import it.jaschke.alexandria.data.AlexandriaContract;
 import it.jaschke.alexandria.interfaces.OnScanResultsListener;
+import it.jaschke.alexandria.network.NetworkConnectivity;
 import it.jaschke.alexandria.services.BookService;
 import it.jaschke.alexandria.services.DownloadImage;
-
 
 public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>, OnScanResultsListener {
 
@@ -49,7 +49,6 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
 
     @Bind(R.id.delete_button) Button deleteButton;
     @Bind(R.id.scan_button) Button scanButton;
-    @Bind(R.id.search_button) Button searchButton;
     @Bind(R.id.save_button) Button saveButton;
     @Bind(R.id.ean) EditText ean;
 
@@ -91,12 +90,10 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
                     clearFields();
                     return;
                 }
-                //Once we have an ISBN, start a book intent
-                Intent bookIntent = new Intent(getActivity(), BookService.class);
-                bookIntent.putExtra(BookService.EAN, ean);
-                bookIntent.setAction(BookService.FETCH_BOOK);
-                getActivity().startService(bookIntent);
-                AddBook.this.restartLoader();
+
+                // Checks to see if the device is currently connected to the internet.
+                QueryTask task = new QueryTask();
+                task.execute(ean);
             }
         });
 
@@ -109,30 +106,11 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
             }
         });
 
-        searchButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // This is the callback method that the system will invoke when your button is
-                // clicked. You might do this by launching another app or by including the
-                //functionality directly in this app.
-                // Hint: Use a Try/Catch block to handle the Intent dispatch gracefully, if you
-                // are using an external app.
-                //when you're done, remove the toast below.
-                Context context = getActivity();
-                CharSequence text = "This button should let you scan a book for its barcode!";
-                int duration = Toast.LENGTH_SHORT;
-
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
-
-            }
-        });
-
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ean.setText("");
+                // TODO: Add it to the list of books.
+
             }
         });
 
@@ -248,6 +226,14 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
         activity.setTitle(R.string.scan);
     }
 
+    private void retrieveBookData(String isbnCode) {
+        Intent bookIntent = new Intent(getActivity(), BookService.class);
+        bookIntent.putExtra(BookService.EAN, isbnCode);
+        bookIntent.setAction(BookService.FETCH_BOOK);
+        getActivity().startService(bookIntent);
+        AddBook.this.restartLoader();
+    }
+
     /** INTERFACE METHODS ______________________________________________________________________ **/
 
     @Override
@@ -264,6 +250,43 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
         // Hides the ResultsFragment view.
         else {
             // TODO: Remove fragment here.
+        }
+    }
+
+    /** SUBCLASSES _____________________________________________________________________________ **/
+
+    // QueryTask(): An AsyncTask that runs in the background to process the network calls for
+    // accessing the book database from the Internet.
+    public class QueryTask extends AsyncTask<String, Void, Void> {
+
+        /** SUBCLASS VARIABLES _________________________________________________________________ **/
+
+        Boolean isConnected = false; // Used to determine if the device has Internet connectivity.
+        String isbnCode; // References the ISBN string code.
+
+        /** ASYNCTASK METHODS __________________________________________________________________ **/
+
+        // doInBackground(): This method constantly runs in the background while AsyncTask is
+        // running.
+        @Override
+        protected Void doInBackground(String... params) {
+
+            // Checks the device's current network and Internet connectivity state.
+            isConnected = NetworkConnectivity.checkConnectivity(getActivity());
+
+            if (params != null) { isbnCode = params[0]; } // Sets the ISBN string code.
+
+            return null;
+        }
+
+        // onPostExecute(): This method runs on the UI thread after the doInBackground operation has
+        // completed.
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+
+            // Retrieves the book data based on the ISBN code.
+            if (isConnected) { retrieveBookData(isbnCode); }
         }
     }
 }

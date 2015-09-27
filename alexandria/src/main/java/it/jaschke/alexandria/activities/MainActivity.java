@@ -16,7 +16,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-
 import it.jaschke.alexandria.fragments.About;
 import it.jaschke.alexandria.fragments.AddBook;
 import it.jaschke.alexandria.fragments.BookDetail;
@@ -25,8 +24,9 @@ import it.jaschke.alexandria.ui.NavigationDrawerFragment;
 import it.jaschke.alexandria.R;
 import it.jaschke.alexandria.api.Callback;
 
-
 public class MainActivity extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks, Callback {
+
+    /** CLASS VARIABLES ________________________________________________________________________ **/
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.

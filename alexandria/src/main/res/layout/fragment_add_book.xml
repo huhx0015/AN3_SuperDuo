@@ -35,18 +35,8 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SEARCH"
-                android:id="@+id/search_button"
-                android:layout_weight="1"
-                android:layout_gravity="center"
-                android:textSize="10sp" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="@string/scan_button"
                 android:id="@+id/scan_button"
-                android:layout_weight="1"
                 android:layout_gravity="center"
                 android:textSize="10sp" />
 
