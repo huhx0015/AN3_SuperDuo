@@ -11,12 +11,7 @@ import com.mirasense.scanditsdk.interfaces.ScanditSDK;
 import com.mirasense.scanditsdk.interfaces.ScanditSDKCode;
 import com.mirasense.scanditsdk.interfaces.ScanditSDKOnScanListener;
 import com.mirasense.scanditsdk.interfaces.ScanditSDKScanSession;
-
 import it.jaschke.alexandria.R;
-
-/**
- * Simple demo application illustrating the use of the Scandit SDK.
- */
 
 /*
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -31,22 +26,32 @@ import it.jaschke.alexandria.R;
  * See the License for the specific language governing premissions and
  * limitations under the License.
  */
+
+/** -----------------------------------------------------------------------------------------------
+ *  [ScannerActivity] CLASS
+ *  DESCRIPTION: ScannerActivity is an Activity class that initializes the use of the Scandit
+ *  barcode scanner.
+ *  -----------------------------------------------------------------------------------------------
+ */
+
 public class ScannerActivity extends AppCompatActivity implements ScanditSDKOnScanListener {
 
-    // The main object for recognizing a displaying barcodes.
-    private ScanditSDK mBarcodePicker;
+    /** CLASS VARIABLES ________________________________________________________________________ **/
 
-    // Enter your Scandit SDK App key here.
-    // Your Scandit SDK App key is available via your Scandit SDK web account.
-    public String sScanditSdkAppKey = "ITS-A-SECRET!";
+    // SCANDIT VARIBLES
+    private ScanditSDK barcodePicker; // The main object for recognizing a displaying barcodes.
+    public String SCANDIT_API_KEY = "ITS-A-SECRET!"; // Enter your Scandit SDK App key here.
 
+    // SYSTEM VARIABLES
     private static final String SCAN_RESULTS = "SCAN_RESULTS";
+    private Toast toastMessage = null;
 
-    Toast mToast = null;
+    /** ACTIVITY METHODS _______________________________________________________________________ **/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        // Switch to full screen.
+        // Switches the activity to full screen mode.
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -54,31 +59,41 @@ public class ScannerActivity extends AppCompatActivity implements ScanditSDKOnSc
         super.onCreate(savedInstanceState);
 
         // Retrieves Scandit SDK key from the secret XML.
-        sScanditSdkAppKey = getResources().getString(R.string.scandit_sdk_key);
+        SCANDIT_API_KEY = getResources().getString(R.string.scandit_sdk_key);
 
-        // Initialize and start the bar code recognition.
+        // Initialize and starts the bar code recognition.
         initializeAndStartBarcodeScanning();
     }
 
     @Override
+    protected void onResume() {
+
+        // Once the activity is in the foreground again, restart scanning.
+        barcodePicker.startScanning();
+        super.onResume();
+    }
+
+    @Override
     protected void onPause() {
-        // When the activity is in the background immediately stop the
-        // scanning to save resources and free the camera.
-        mBarcodePicker.stopScanning();
+
+        // When the activity is in the background immediately stop the scanning to save resources
+        // and free the camera.
+        barcodePicker.stopScanning();
 
         super.onPause();
     }
 
+    /** ACTIVITY EXTENSION METHODS _____________________________________________________________ **/
+
     @Override
-    protected void onResume() {
-        // Once the activity is in the foreground again, restart scanning.
-        mBarcodePicker.startScanning();
-        super.onResume();
+    public void onBackPressed() {
+        barcodePicker.stopScanning();
+        finish();
     }
 
-    /**
-     * Initializes and starts the bar code scanning.
-     */
+    /** SCANDIT METHODS ________________________________________________________________________ **/
+
+    // initializeAndStartBarcodeScanning(): Initializes and starts the bar code scanning.
     public void initializeAndStartBarcodeScanning() {
 
         // We instantiate the automatically adjusting barcode picker that will
@@ -87,51 +102,42 @@ public class ScannerActivity extends AppCompatActivity implements ScanditSDKOnSc
         // legacy picker will rotate the orientation and not properly work in
         // non-fullscreen.
         ScanditSDKAutoAdjustingBarcodePicker picker = new ScanditSDKAutoAdjustingBarcodePicker(
-                this, sScanditSdkAppKey, ScanditSDKAutoAdjustingBarcodePicker.CAMERA_FACING_BACK);
+                this, SCANDIT_API_KEY, ScanditSDKAutoAdjustingBarcodePicker.CAMERA_FACING_BACK);
 
         // Add both views to activity, with the scan GUI on top.
         setContentView(picker);
-        mBarcodePicker = picker;
+        barcodePicker = picker;
 
         // Register listener, in order to be notified about relevant events
         // (e.g. a successfully scanned bar code).
-        mBarcodePicker.addOnScanListener(this);
+        barcodePicker.addOnScanListener(this);
     }
 
-    /**
-     *  Called when a barcode has been decoded successfully.
-     */
+    // didScan(): Called when a barcode has been decoded successfully.
     public void didScan(ScanditSDKScanSession session) {
+
         String message = "";
+
         for (ScanditSDKCode code : session.getNewlyDecodedCodes()) {
             String data = code.getData();
+
             // truncate code to certain length
             String cleanData = data;
-            if (data.length() > 30) {
-                cleanData = data.substring(0, 25) + "[...]";
-            }
-            if (message.length() > 0) {
-                message += "\n\n\n";
-            }
+            if (data.length() > 30) { cleanData = data.substring(0, 25) + "[...]"; }
+            if (message.length() > 0) { message += "\n\n\n"; }
             message += cleanData;
             message += "\n\n(" + code.getSymbologyString() + ")";
         }
-        if (mToast != null) {
-            mToast.cancel();
-        }
-        mToast = Toast.makeText(this, message, Toast.LENGTH_LONG);
-        mToast.show();
+
+        if (toastMessage != null) { toastMessage.cancel(); }
+
+        toastMessage = Toast.makeText(this, message, Toast.LENGTH_LONG);
+        toastMessage.show();
 
         // Finishes activity and returns to the previous activity.
         Intent scanResults = new Intent();
         scanResults.putExtra(SCAN_RESULTS, message);
         setResult(RESULT_OK, scanResults);
-        finish();
-    }
-
-    @Override
-    public void onBackPressed() {
-        mBarcodePicker.stopScanning();
         finish();
     }
 }

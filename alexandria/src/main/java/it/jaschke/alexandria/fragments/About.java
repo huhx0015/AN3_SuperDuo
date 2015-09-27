@@ -6,14 +6,26 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import it.jaschke.alexandria.R;
 
+/** -----------------------------------------------------------------------------------------------
+ *  [About] CLASS
+ *  ORIGINAL DEVELOPER: Sascha Jaschke
+ *  -----------------------------------------------------------------------------------------------
+ */
 
 public class About extends Fragment {
 
-    public About(){
+    /** INITIALIZATION METHODS _________________________________________________________________ **/
 
+    public About() {}
+
+    /** FRAGMENT LIFECYCLE METHODS _____________________________________________________________ **/
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        activity.setTitle(R.string.about);
     }
 
     @Override
@@ -22,11 +34,4 @@ public class About extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_about, container, false);
         return rootView;
     }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        activity.setTitle(R.string.about);
-    }
-
 }

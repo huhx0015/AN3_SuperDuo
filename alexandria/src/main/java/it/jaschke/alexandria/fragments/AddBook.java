@@ -1,7 +1,6 @@
 package it.jaschke.alexandria.fragments;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -11,7 +10,6 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,41 +23,42 @@ import butterknife.ButterKnife;
 import it.jaschke.alexandria.R;
 import it.jaschke.alexandria.activities.ScannerActivity;
 import it.jaschke.alexandria.data.AlexandriaContract;
-import it.jaschke.alexandria.interfaces.OnScanResultsListener;
 import it.jaschke.alexandria.network.NetworkConnectivity;
 import it.jaschke.alexandria.services.BookService;
 import it.jaschke.alexandria.services.DownloadImage;
 
-public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>, OnScanResultsListener {
+/** -----------------------------------------------------------------------------------------------
+ *  [AddBook] CLASS
+ *  ORIGINAL DEVELOPER: Sascha Jaschke
+ *  MODIFIED BY: Michael Yoon Huh (HUHX0015)
+ *  -----------------------------------------------------------------------------------------------
+ */
 
-    private static final String TAG = "INTENT_TO_SCAN_ACTIVITY";
-    private final int LOADER_ID = 1;
-    private View rootView;
-    private final String EAN_CONTENT="eanContent";
-    private static final String SCAN_FORMAT = "scanFormat";
-    private static final String SCAN_CONTENTS = "scanContents";
+public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private String mScanFormat = "Format:";
-    private String mScanContents = "Contents:";
-
-    private Boolean showFragment = false; // Used to determine if the fragment is currently being shown or not.
+    /** CLASS VARIABLES ________________________________________________________________________ **/
 
     private static final int SCAN_BARCODE_RESULTS = 1337;
+    private final int LOADER_ID = 1;
     private static final String SCAN_RESULTS = "SCAN_RESULTS";
+    private final String EAN_CONTENT="eanContent";
+    private View rootView;
 
     @Bind(R.id.delete_button) Button deleteButton;
     @Bind(R.id.scan_button) Button scanButton;
     @Bind(R.id.save_button) Button saveButton;
     @Bind(R.id.ean) EditText ean;
 
+    /** INITIALIZATION METHODS _________________________________________________________________ **/
+
     public AddBook(){}
 
+    /** FRAGMENT LIFECYCLE METHODS _____________________________________________________________ **/
+
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        if(ean!=null) {
-            outState.putString(EAN_CONTENT, ean.getText().toString());
-        }
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        activity.setTitle(R.string.scan);
     }
 
     @Override
@@ -68,64 +67,9 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
         rootView = inflater.inflate(R.layout.fragment_add_book, container, false);
         ButterKnife.bind(this, rootView);
 
-        ean.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                //no need
-            }
+        setupLayout();
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                //no need
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                String ean = s.toString();
-                //catch isbn10 numbers
-                if (ean.length() == 10 && !ean.startsWith("978")) {
-                    ean = "978" + ean;
-                }
-                if (ean.length() < 13) {
-                    clearFields();
-                    return;
-                }
-
-                // Checks to see if the device is currently connected to the internet.
-                QueryTask task = new QueryTask();
-                task.execute(ean);
-            }
-        });
-
-        scanButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getActivity(), ScannerActivity.class);
-                startActivityForResult(i, SCAN_BARCODE_RESULTS);
-            }
-        });
-
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // TODO: Add it to the list of books.
-
-            }
-        });
-
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent bookIntent = new Intent(getActivity(), BookService.class);
-                bookIntent.putExtra(BookService.EAN, ean.getText().toString());
-                bookIntent.setAction(BookService.DELETE_BOOK);
-                getActivity().startService(bookIntent);
-                ean.setText("");
-            }
-        });
-
-        if(savedInstanceState!=null){
+        if (savedInstanceState != null){
             ean.setText(savedInstanceState.getString(EAN_CONTENT));
             ean.setHint("");
         }
@@ -138,6 +82,8 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
+
+    /** FRAGMENT EXTENSION METHODS _____________________________________________________________ **/
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -153,19 +99,29 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
         }
     }
 
-    private void restartLoader(){
-        getLoaderManager().restartLoader(LOADER_ID, null, this);
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if(ean!=null) {
+            outState.putString(EAN_CONTENT, ean.getText().toString());
+        }
     }
+
+    /** CURSOR METHODS _________________________________________________________________________ **/
 
     @Override
     public android.support.v4.content.Loader<Cursor> onCreateLoader(int id, Bundle args) {
+
         if(ean.getText().length()==0){
             return null;
         }
+
         String eanStr= ean.getText().toString();
+
         if(eanStr.length()==10 && !eanStr.startsWith("978")){
             eanStr="978"+eanStr;
         }
+
         return new CursorLoader(
                 getActivity(),
                 AlexandriaContract.BookEntry.buildFullBookUri(Long.parseLong(eanStr)),
@@ -178,6 +134,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
 
     @Override
     public void onLoadFinished(android.support.v4.content.Loader<Cursor> loader, Cursor data) {
+
         if (!data.moveToFirst()) {
             return;
         }
@@ -206,8 +163,74 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     }
 
     @Override
-    public void onLoaderReset(android.support.v4.content.Loader<Cursor> loader) {
+    public void onLoaderReset(android.support.v4.content.Loader<Cursor> loader) {}
 
+    private void restartLoader() {
+        getLoaderManager().restartLoader(LOADER_ID, null, this);
+    }
+
+    /** LAYOUT METHODS _________________________________________________________________________ **/
+
+    private void setupLayout() {
+        setupButtons();
+    }
+
+    private void setupButtons() {
+
+        ean.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                String ean = s.toString();
+
+                //catch isbn10 numbers
+                if (ean.length() == 10 && !ean.startsWith("978")) {
+                    ean = "978" + ean;
+                }
+                if (ean.length() < 13) {
+                    clearFields();
+                    return;
+                }
+
+                // Checks to see if the device is currently connected to the internet.
+                QueryTask task = new QueryTask();
+                task.execute(ean);
+            }
+        });
+
+        scanButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), ScannerActivity.class);
+                startActivityForResult(i, SCAN_BARCODE_RESULTS);
+            }
+        });
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {}
+        });
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent bookIntent = new Intent(getActivity(), BookService.class);
+                bookIntent.putExtra(BookService.EAN, ean.getText().toString());
+                bookIntent.setAction(BookService.DELETE_BOOK);
+                getActivity().startService(bookIntent);
+                ean.setText("");
+            }
+        });
     }
 
     private void clearFields(){
@@ -220,37 +243,12 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
         rootView.findViewById(R.id.delete_button).setVisibility(View.INVISIBLE);
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        activity.setTitle(R.string.scan);
-    }
-
     private void retrieveBookData(String isbnCode) {
         Intent bookIntent = new Intent(getActivity(), BookService.class);
         bookIntent.putExtra(BookService.EAN, isbnCode);
         bookIntent.setAction(BookService.FETCH_BOOK);
         getActivity().startService(bookIntent);
         AddBook.this.restartLoader();
-    }
-
-    /** INTERFACE METHODS ______________________________________________________________________ **/
-
-    @Override
-    public void displayResultsFragment(String upc, Boolean isDisplay) {
-
-        // Displays the ResultsFragment view only if the fragment is not being shown.
-        if (isDisplay && !showFragment) {
-            showFragment = true;
-            ResultsFragment resultsFragment = new ResultsFragment();
-            resultsFragment.initializeFragment(upc);
-            // TODO: Setup fragment here.
-        }
-
-        // Hides the ResultsFragment view.
-        else {
-            // TODO: Remove fragment here.
-        }
     }
 
     /** SUBCLASSES _____________________________________________________________________________ **/

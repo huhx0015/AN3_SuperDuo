@@ -13,23 +13,31 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
-
 import it.jaschke.alexandria.R;
 import it.jaschke.alexandria.api.BookListAdapter;
 import it.jaschke.alexandria.api.Callback;
 import it.jaschke.alexandria.data.AlexandriaContract;
 
-
 public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
+    /** CLASS VARIABLES ________________________________________________________________________ **/
+
     private BookListAdapter bookListAdapter;
-    private ListView bookList;
-    private int position = ListView.INVALID_POSITION;
     private EditText searchText;
-
+    private ListView bookList;
     private final int LOADER_ID = 10;
+    private int position = ListView.INVALID_POSITION;
 
-    public ListOfBooks() {
+    /** INITIALIZATION METHODS _________________________________________________________________ **/
+
+    public ListOfBooks() {}
+
+    /** FRAGMENT LIFECYCLE METHODS _____________________________________________________________ **/
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        activity.setTitle(R.string.books);
     }
 
     @Override
@@ -47,7 +55,6 @@ public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbac
                 null, // values for "where" clause
                 null  // sort order
         );
-
 
         bookListAdapter = new BookListAdapter(getActivity(), cursor, 0);
         View rootView = inflater.inflate(R.layout.fragment_list_of_books, container, false);
@@ -70,7 +77,7 @@ public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbac
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Cursor cursor = bookListAdapter.getCursor();
                 if (cursor != null && cursor.moveToPosition(position)) {
-                    ((Callback)getActivity())
+                    ((Callback) getActivity())
                             .onItemSelected(cursor.getString(cursor.getColumnIndex(AlexandriaContract.BookEntry._ID)));
                 }
             }
@@ -79,9 +86,7 @@ public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbac
         return rootView;
     }
 
-    private void restartLoader(){
-        getLoaderManager().restartLoader(LOADER_ID, null, this);
-    }
+    /** CURSOR METHODS _________________________________________________________________________ **/
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
@@ -124,9 +129,7 @@ public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbac
         bookListAdapter.swapCursor(null);
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        activity.setTitle(R.string.books);
+    private void restartLoader(){
+        getLoaderManager().restartLoader(LOADER_ID, null, this);
     }
 }

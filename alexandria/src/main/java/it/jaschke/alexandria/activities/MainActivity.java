@@ -24,24 +24,31 @@ import it.jaschke.alexandria.ui.NavigationDrawerFragment;
 import it.jaschke.alexandria.R;
 import it.jaschke.alexandria.api.Callback;
 
+/** -----------------------------------------------------------------------------------------------
+ *  [MainActivity] CLASS
+ *  ORIGINAL DEVELOPER: Sascha Jaschke
+ *  MODIFIED BY: Michael Yoon Huh (HUHX0015)
+ *  DESCRIPTION: MainActivity is the main, default Activity class for this application.
+ *  -----------------------------------------------------------------------------------------------
+ */
+
 public class MainActivity extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks, Callback {
 
     /** CLASS VARIABLES ________________________________________________________________________ **/
 
-    /**
-     * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
-     */
-    private NavigationDrawerFragment navigationDrawerFragment;
-
-    /**
-     * Used to store the last screen title. For use in {@link #restoreActionBar()}.
-     */
-    private CharSequence title;
-    public static boolean IS_TABLET = false;
+    // BROADCAST RECEIVER VARIABLES
     private BroadcastReceiver messageReciever;
 
+    // SYSTEM VARIABLES
+    public static boolean IS_TABLET = false;
     public static final String MESSAGE_EVENT = "MESSAGE_EVENT";
     public static final String MESSAGE_KEY = "MESSAGE_EXTRA";
+
+    // UI VARIABLES
+    private CharSequence title; // Used to store the last screen title. For use in {@link #restoreActionBar()}.
+    private NavigationDrawerFragment navigationDrawerFragment; // Fragment managing the behaviors, interactions and presentation of the navigation drawer.
+
+    /** ACTIVITY LIFECYCLE METHODS _____________________________________________________________ **/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +71,52 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         // Set up the drawer.
         navigationDrawerFragment.setUp(R.id.navigation_drawer,
                     (DrawerLayout) findViewById(R.id.drawer_layout));
+    }
+
+    @Override
+    protected void onDestroy() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(messageReciever);
+        super.onDestroy();
+    }
+
+    /** ACTIVITY EXTENSION METHODS _____________________________________________________________ **/
+
+    @Override
+    public void onBackPressed() {
+        if(getSupportFragmentManager().getBackStackEntryCount()<2){
+            finish();
+        }
+        super.onBackPressed();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        if (!navigationDrawerFragment.isDrawerOpen()) {
+            getMenuInflater().inflate(R.menu.main, menu);
+            restoreActionBar();
+            return true;
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public void onItemSelected(String ean) {
+        Bundle args = new Bundle();
+        args.putString(BookDetail.EAN_KEY, ean);
+
+        BookDetail fragment = new BookDetail();
+        fragment.setArguments(args);
+
+        int id = R.id.container;
+        if(findViewById(R.id.right_container) != null){
+            id = R.id.right_container;
+        }
+        getSupportFragmentManager().beginTransaction()
+                .replace(id, fragment)
+                .addToBackStack("Book Detail")
+                .commit();
+
     }
 
     @Override
@@ -92,36 +145,9 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                 .commit();
     }
 
-    public void setTitle(int titleId) {
-        title = getString(titleId);
-    }
-
-    public void restoreActionBar() {
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(title);
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        if (!navigationDrawerFragment.isDrawerOpen()) {
-            // Only show items in the action bar relevant to this screen
-            // if the drawer is not showing. Otherwise, let the drawer
-            // decide what to show in the action bar.
-            getMenuInflater().inflate(R.menu.main, menu);
-            restoreActionBar();
-            return true;
-        }
-        return super.onCreateOptionsMenu(menu);
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
@@ -132,39 +158,20 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onDestroy() {
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(messageReciever);
-        super.onDestroy();
+    /** LAYOUT METHODS _________________________________________________________________________ **/
+
+    public void restoreActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setTitle(title);
     }
 
-    @Override
-    public void onItemSelected(String ean) {
-        Bundle args = new Bundle();
-        args.putString(BookDetail.EAN_KEY, ean);
-
-        BookDetail fragment = new BookDetail();
-        fragment.setArguments(args);
-
-        int id = R.id.container;
-        if(findViewById(R.id.right_container) != null){
-            id = R.id.right_container;
-        }
-        getSupportFragmentManager().beginTransaction()
-                .replace(id, fragment)
-                .addToBackStack("Book Detail")
-                .commit();
-
+    public void setTitle(int titleId) {
+        title = getString(titleId);
     }
 
-    private class MessageReciever extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if(intent.getStringExtra(MESSAGE_KEY)!=null){
-                Toast.makeText(MainActivity.this, intent.getStringExtra(MESSAGE_KEY), Toast.LENGTH_LONG).show();
-            }
-        }
-    }
+    /** MISCELLANEOUS METHODS __________________________________________________________________ **/
 
     public void goBack(View view){
         getSupportFragmentManager().popBackStack();
@@ -176,13 +183,15 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                 >= Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
 
-    @Override
-    public void onBackPressed() {
-        if(getSupportFragmentManager().getBackStackEntryCount()<2){
-            finish();
+    /** SUBCLASSES _____________________________________________________________________________ **/
+
+    private class MessageReciever extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(intent.getStringExtra(MESSAGE_KEY)!=null){
+                Toast.makeText(MainActivity.this, intent.getStringExtra(MESSAGE_KEY), Toast.LENGTH_LONG).show();
+            }
         }
-        super.onBackPressed();
     }
-
-
 }

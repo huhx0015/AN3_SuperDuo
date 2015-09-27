@@ -10,9 +10,12 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.util.Log;
 
-/**
- * Created by saj on 24/12/14.
+/** -----------------------------------------------------------------------------------------------
+ *  [BookProvider] CLASS
+ *  ORIGINAL DEVELOPER: Sascha Jaschke
+ *  -----------------------------------------------------------------------------------------------
  */
+
 public class BookProvider extends ContentProvider {
 
     private static final int BOOK_ID = 100;

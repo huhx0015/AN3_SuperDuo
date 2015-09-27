@@ -1,8 +1,11 @@
 package it.jaschke.alexandria.api;
 
-/**
- * Created by saj on 25/01/15.
+/** -----------------------------------------------------------------------------------------------
+ *  [Callback] CLASS
+ *  ORIGINAL DEVELOPER: Sascha Jaschke
+ *  -----------------------------------------------------------------------------------------------
  */
 public interface Callback {
-    public void onItemSelected(String ean);
+
+    void onItemSelected(String ean);
 }

@@ -7,40 +7,43 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
 import it.jaschke.alexandria.activities.MainActivity;
 import it.jaschke.alexandria.R;
 import it.jaschke.alexandria.data.AlexandriaContract;
 
-
-/**
- * An {@link IntentService} subclass for handling asynchronous task requests in
- * a service on a separate handler thread.
- * <p/>
+/** -----------------------------------------------------------------------------------------------
+ *  [BookService] CLASS
+ *  ORIGINAL DEVELOPER: Sascha Jaschke
+ *  DESCRIPTION: An {@link IntentService} subclass for handling asynchronous task requests in a
+ *  service on a separate handler thread.
+ *  -----------------------------------------------------------------------------------------------
  */
+
 public class BookService extends IntentService {
 
-    private final String LOG_TAG = BookService.class.getSimpleName();
+    /** CLASS VARIABLES ________________________________________________________________________ **/
 
+    private final String LOG_TAG = BookService.class.getSimpleName();
     public static final String FETCH_BOOK = "it.jaschke.alexandria.services.action.FETCH_BOOK";
     public static final String DELETE_BOOK = "it.jaschke.alexandria.services.action.DELETE_BOOK";
-
     public static final String EAN = "it.jaschke.alexandria.services.extra.EAN";
+
+    /** INITIALIZATION METHODS _________________________________________________________________ **/
 
     public BookService() {
         super("Alexandria");
     }
+
+    /** INTENT SERVICE METHODS _________________________________________________________________ **/
 
     @Override
     protected void onHandleIntent(Intent intent) {
@@ -72,7 +75,7 @@ public class BookService extends IntentService {
      */
     private void fetchBook(String ean) {
 
-        if(ean.length()!=13){
+        if (ean.length()!=13){
             return;
         }
 
@@ -84,7 +87,7 @@ public class BookService extends IntentService {
                 null  // sort order
         );
 
-        if(bookEntry.getCount()>0){
+        if (bookEntry.getCount()>0){
             bookEntry.close();
             return;
         }
@@ -157,11 +160,15 @@ public class BookService extends IntentService {
         final String IMG_URL = "thumbnail";
 
         try {
+
             JSONObject bookJson = new JSONObject(bookJsonString);
             JSONArray bookArray;
+
             if(bookJson.has(ITEMS)){
                 bookArray = bookJson.getJSONArray(ITEMS);
-            }else{
+            }
+
+            else{
                 Intent messageIntent = new Intent(MainActivity.MESSAGE_EVENT);
                 messageIntent.putExtra(MainActivity.MESSAGE_KEY,getResources().getString(R.string.not_found));
                 LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(messageIntent);
