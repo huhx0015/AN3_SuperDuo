@@ -44,14 +44,20 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     private final String EAN_CONTENT="eanContent";
     private View rootView;
 
+    // VIEW INJECTION VARIABLES
     @Bind(R.id.delete_button) Button deleteButton;
     @Bind(R.id.scan_button) Button scanButton;
     @Bind(R.id.save_button) Button saveButton;
     @Bind(R.id.ean) EditText ean;
+    @Bind(R.id.bookCover) ImageView bookCoverImage;
+    @Bind(R.id.bookTitle) TextView bookTitle;
+    @Bind(R.id.bookSubTitle) TextView bookSubtitle;
+    @Bind(R.id.authors) TextView authorsText;
+    @Bind(R.id.categories) TextView categoriesText;
 
     /** INITIALIZATION METHODS _________________________________________________________________ **/
 
-    public AddBook(){}
+    public AddBook() {}
 
     /** FRAGMENT LIFECYCLE METHODS _____________________________________________________________ **/
 
@@ -139,18 +145,24 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
             return;
         }
 
-        String bookTitle = data.getString(data.getColumnIndex(AlexandriaContract.BookEntry.TITLE));
-        ((TextView) rootView.findViewById(R.id.bookTitle)).setText(bookTitle);
+        String bookTitleString = data.getString(data.getColumnIndex(AlexandriaContract.BookEntry.TITLE));
+        bookTitle.setText(bookTitleString);
 
         String bookSubTitle = data.getString(data.getColumnIndex(AlexandriaContract.BookEntry.SUBTITLE));
-        ((TextView) rootView.findViewById(R.id.bookSubTitle)).setText(bookSubTitle);
+        bookSubtitle.setText(bookSubTitle);
 
         String authors = data.getString(data.getColumnIndex(AlexandriaContract.AuthorEntry.AUTHOR));
-        String[] authorsArr = authors.split(",");
-        ((TextView) rootView.findViewById(R.id.authors)).setLines(authorsArr.length);
-        ((TextView) rootView.findViewById(R.id.authors)).setText(authors.replace(",","\n"));
+
+        // If authors string data is not null, the authors strings is split up.
+        if (authors != null) {
+            String[] authorsArr = authors.split(",");
+            authorsText.setLines(authorsArr.length);
+            authorsText.setText(authors.replace(",", "\n"));
+        }
+
         String imgUrl = data.getString(data.getColumnIndex(AlexandriaContract.BookEntry.IMAGE_URL));
-        if(Patterns.WEB_URL.matcher(imgUrl).matches()){
+
+        if (Patterns.WEB_URL.matcher(imgUrl).matches()){
             new DownloadImage((ImageView) rootView.findViewById(R.id.bookCover)).execute(imgUrl);
             rootView.findViewById(R.id.bookCover).setVisibility(View.VISIBLE);
         }
@@ -234,13 +246,13 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     }
 
     private void clearFields(){
-        ((TextView) rootView.findViewById(R.id.bookTitle)).setText("");
-        ((TextView) rootView.findViewById(R.id.bookSubTitle)).setText("");
-        ((TextView) rootView.findViewById(R.id.authors)).setText("");
-        ((TextView) rootView.findViewById(R.id.categories)).setText("");
-        rootView.findViewById(R.id.bookCover).setVisibility(View.INVISIBLE);
-        rootView.findViewById(R.id.save_button).setVisibility(View.INVISIBLE);
-        rootView.findViewById(R.id.delete_button).setVisibility(View.INVISIBLE);
+        bookTitle.setText("");
+        bookSubtitle.setText("");
+        authorsText.setText("");
+        categoriesText.setText("");
+        bookCoverImage.setVisibility(View.INVISIBLE);
+        saveButton.setVisibility(View.INVISIBLE);
+        deleteButton.setVisibility(View.INVISIBLE);
     }
 
     private void retrieveBookData(String isbnCode) {
