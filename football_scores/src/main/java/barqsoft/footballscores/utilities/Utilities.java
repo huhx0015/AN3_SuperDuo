@@ -1,19 +1,23 @@
-package barqsoft.footballscores;
+package barqsoft.footballscores.utilities;
+
+import barqsoft.footballscores.R;
 
 /**
  * Created by yehya khaled on 3/3/2015.
  */
-public class Utilies
-{
+public class Utilities {
+
+    /** CLASS VARIABLES ________________________________________________________________________ **/
+
     public static final int SERIE_A = 357;
     public static final int PREMIER_LEGAUE = 354;
     public static final int CHAMPIONS_LEAGUE = 362;
     public static final int PRIMERA_DIVISION = 358;
     public static final int BUNDESLIGA = 351;
-    public static String getLeague(int league_num)
-    {
-        switch (league_num)
-        {
+
+    public static String getLeague(int league_num) {
+
+        switch (league_num) {
             case SERIE_A : return "Seria A";
             case PREMIER_LEGAUE : return "Premier League";
             case CHAMPIONS_LEAGUE : return "UEFA Champions League";
@@ -22,8 +26,9 @@ public class Utilies
             default: return "Not known League Please report";
         }
     }
-    public static String getMatchDay(int match_day,int league_num)
-    {
+
+    public static String getMatchDay(int match_day,int league_num) {
+
         if(league_num == CHAMPIONS_LEAGUE)
         {
             if (match_day <= 6)
