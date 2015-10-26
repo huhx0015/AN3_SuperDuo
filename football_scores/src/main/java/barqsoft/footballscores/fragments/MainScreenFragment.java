@@ -13,43 +13,42 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import barqsoft.footballscores.DatabaseContract;
 import barqsoft.footballscores.R;
-import barqsoft.footballscores.ViewHolder;
+import barqsoft.footballscores.database.DatabaseContract;
+import barqsoft.footballscores.ui.ViewHolder;
 import barqsoft.footballscores.activities.MainActivity;
-import barqsoft.footballscores.scoresAdapter;
-import barqsoft.footballscores.service.myFetchService;
+import barqsoft.footballscores.database.ScoresAdapter;
+import barqsoft.footballscores.service.MyFetchService;
 
 /**
  * A placeholder fragment containing a simple view.
  */
 public class MainScreenFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>
 {
-    public scoresAdapter mAdapter;
+    public ScoresAdapter mAdapter;
     public static final int SCORES_LOADER = 0;
     private String[] fragmentdate = new String[1];
     private int last_selected_item = -1;
 
     public MainScreenFragment()
-    {
-    }
+    {}
 
-    private void update_scores()
-    {
-        Intent service_start = new Intent(getActivity(), myFetchService.class);
+    private void update_scores() {
+        Intent service_start = new Intent(getActivity(), MyFetchService.class);
         getActivity().startService(service_start);
     }
-    public void setFragmentDate(String date)
-    {
+
+    public void setFragmentDate(String date) {
         fragmentdate[0] = date;
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              final Bundle savedInstanceState) {
         update_scores();
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         final ListView score_list = (ListView) rootView.findViewById(R.id.scores_list);
-        mAdapter = new scoresAdapter(getActivity(),null,0);
+        mAdapter = new ScoresAdapter(getActivity(),null,0);
         score_list.setAdapter(mAdapter);
         getLoaderManager().initLoader(SCORES_LOADER,null,this);
         mAdapter.detail_match_id = MainActivity.selected_match_id;
@@ -104,6 +103,4 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
     {
         mAdapter.swapCursor(null);
     }
-
-
 }

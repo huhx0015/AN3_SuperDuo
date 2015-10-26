@@ -7,18 +7,23 @@ import android.database.sqlite.SQLiteOpenHelper;
 /**
  * Created by yehya khaled on 2/25/2015.
  */
-public class ScoresDBHelper extends SQLiteOpenHelper
-{
+public class ScoresDBHelper extends SQLiteOpenHelper {
+
+    /** CLASS VARIABLES ________________________________________________________________________ **/
+
     public static final String DATABASE_NAME = "Scores.db";
     private static final int DATABASE_VERSION = 2;
+
     public ScoresDBHelper(Context context)
     {
         super(context,DATABASE_NAME,null,DATABASE_VERSION);
     }
 
+    /** SQLITEOPENHELPER METHODS _______________________________________________________________ **/
+
     @Override
-    public void onCreate(SQLiteDatabase db)
-    {
+    public void onCreate(SQLiteDatabase db) {
+
         final String CreateScoresTable = "CREATE TABLE " + DatabaseContract.SCORES_TABLE + " ("
                 + DatabaseContract.scores_table._ID + " INTEGER PRIMARY KEY,"
                 + DatabaseContract.scores_table.DATE_COL + " TEXT NOT NULL,"
@@ -36,8 +41,7 @@ public class ScoresDBHelper extends SQLiteOpenHelper
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
-    {
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         //Remove old values when upgrading.
         db.execSQL("DROP TABLE IF EXISTS " + DatabaseContract.SCORES_TABLE);
     }
