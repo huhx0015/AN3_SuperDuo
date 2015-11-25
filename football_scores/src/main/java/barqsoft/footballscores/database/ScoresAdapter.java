@@ -17,7 +17,7 @@ import barqsoft.footballscores.utilities.Utilities;
 /**
  * Created by yehya khaled on 2/26/2015.
  */
-public class FootballScoresAdapter extends CursorAdapter {
+public class ScoresAdapter extends CursorAdapter {
 
     /** CLASS VARIABLES ________________________________________________________________________ **/
 
@@ -35,7 +35,7 @@ public class FootballScoresAdapter extends CursorAdapter {
 
     /** INITIALIZATION METHODS _________________________________________________________________ **/
 
-    public FootballScoresAdapter(Context context, Cursor cursor, int flags) {
+    public ScoresAdapter(Context context, Cursor cursor, int flags) {
         super(context,cursor,flags);
     }
 

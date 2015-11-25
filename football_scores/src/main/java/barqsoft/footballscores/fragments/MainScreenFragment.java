@@ -18,23 +18,22 @@ import barqsoft.footballscores.database.DatabaseContract;
 import barqsoft.footballscores.ui.ViewHolder;
 import barqsoft.footballscores.activities.MainActivity;
 import barqsoft.footballscores.database.ScoresAdapter;
-import barqsoft.footballscores.service.MyFetchService;
+import barqsoft.footballscores.service.ScoresFetchService;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainScreenFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>
-{
+public class MainScreenFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+
     public ScoresAdapter mAdapter;
     public static final int SCORES_LOADER = 0;
     private String[] fragmentdate = new String[1];
     private int last_selected_item = -1;
 
-    public MainScreenFragment()
-    {}
+    public MainScreenFragment() {}
 
     private void update_scores() {
-        Intent service_start = new Intent(getActivity(), MyFetchService.class);
+        Intent service_start = new Intent(getActivity(), ScoresFetchService.class);
         getActivity().startService(service_start);
     }
 
@@ -67,8 +66,7 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
     }
 
     @Override
-    public Loader<Cursor> onCreateLoader(int i, Bundle bundle)
-    {
+    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         return new CursorLoader(getActivity(), DatabaseContract.scores_table.buildScoreWithDate(),
                 null,null,fragmentdate,null);
     }
