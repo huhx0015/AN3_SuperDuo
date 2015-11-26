@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import barqsoft.footballscores.fragments.PagerFragment;
 import barqsoft.footballscores.R;
 
@@ -26,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Log.d(LOG_TAG, "Reached MainActivity onCreate");
 
         if (savedInstanceState == null) {

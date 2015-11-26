@@ -5,5 +5,5 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     tools:ignore="MergeRootFrame"
-    android:background="@android:color/white">
+    android:background="@color/activity_background_color">
 </FrameLayout>

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="activity_background_color">#E3F2FD</color>
+    <color name="toolbar_light_color">#FFA726</color>
+    <color name="toolbar_dark_color">#FF9800</color>
+
     <color name="blue01">#0099CC</color>
     <color name="blue02">#079DD0</color>
     <color name="blue03">#0FA1D3</color>
