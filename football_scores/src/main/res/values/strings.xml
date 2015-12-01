@@ -22,14 +22,11 @@
     <string name="share_text">Share</string>
     <string name="about">About</string>
     <string name="title_activity_about">AboutActivity</string>
-    <string name="about_text">
-        This Application get Football Matches Score for the Premier League,Seria A,Bundesliga,Primera Division
-        and the Uefa Champions League.
-        All Matches data are acquired from football-data.org free API.
-        All team Logos are acquired from http://hdlogo.wordpress.com/ upon requesting permission form the owner.
-        The original version of this app was created by Yahia Khalid Ibn El Walid Ahmed, and a modified version is given to students in the Udacity Android Nanodegree program.
-        To report any bugs,or suggestions do not hesitate to send a mail to y.k.ibnelwalid@gmail.com.
-
+    <string name="about_text">This application retrieves football match scores for the several major football leagues, including the Premier League, Seria A, Bundesliga, Primera Division, and the UEFA Champions League.\n\n
+        All match data is acquired from football-data.org.\n\n
+        All team logos are acquired from http://hdlogo.wordpress.com/ with permission.\n\n
+        The original version of this app was created by Yahia Khalid Ibn El Walid Ahmed; a modified version is given to students in the Udacity Android Nanodegree program.\n\n
+        To report any bugs or suggestions, please send your inquires to y.k.ibnelwalid@gmail.com.\n\n
         During the off season, fake data will be added to the app.
     </string>
     <string name="widget_text">This is a widget probably.</string>

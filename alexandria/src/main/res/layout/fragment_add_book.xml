@@ -41,75 +41,88 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:foreground="?android:attr/selectableItemBackground"
+        card_view:cardCornerRadius="8dp"
+        card_view:cardElevation="6dp"
+        card_view:cardPreventCornerOverlap="false"
+        card_view:cardUseCompatPadding="true"
+        android:elevation="8dp"
         android:padding="8dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="1"
-        android:id="@+id/center_container">
+        android:id="@+id/add_book_center_container">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:id="@+id/add_book_center_subcontainer">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/bookTitle"
-            android:textSize="@dimen/head_line"
-            android:textIsSelectable="true"
-            android:textStyle="bold"
-            android:paddingRight="20dp"
-            android:layout_below="@+id/eancontainer"
-            android:layout_alignLeft="@+id/eancontainer"
-            android:layout_alignStart="@+id/eancontainer"
-            android:layout_gravity="center_horizontal" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/bookTitle"
+                android:textSize="@dimen/head_line"
+                android:textIsSelectable="true"
+                android:textStyle="bold"
+                android:paddingRight="20dp"
+                android:layout_below="@+id/eancontainer"
+                android:layout_alignLeft="@+id/eancontainer"
+                android:layout_alignStart="@+id/eancontainer"
+                android:layout_gravity="center_horizontal" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/bookSubTitle"
-            android:layout_marginTop="4dp"
-            android:layout_below="@+id/bookTitle"
-            android:maxLines="3"
-            android:ellipsize="end"
-            android:layout_alignLeft="@+id/eancontainer"
-            android:layout_gravity="center_horizontal" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/bookSubTitle"
+                android:layout_marginTop="4dp"
+                android:layout_below="@+id/bookTitle"
+                android:maxLines="3"
+                android:ellipsize="end"
+                android:layout_alignLeft="@+id/eancontainer"
+                android:layout_gravity="center_horizontal" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/authors"
-            android:gravity="end"
-            android:textSize="@dimen/small_fontsize"
-            android:layout_below="@+id/bookSubTitle"
-            android:layout_alignRight="@+id/eancontainer"
-            android:layout_alignEnd="@+id/eancontainer"
-            android:layout_gravity="center"
-            android:layout_marginTop="4dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/authors"
+                android:gravity="end"
+                android:textSize="@dimen/small_fontsize"
+                android:layout_below="@+id/bookSubTitle"
+                android:layout_alignRight="@+id/eancontainer"
+                android:layout_alignEnd="@+id/eancontainer"
+                android:layout_gravity="center"
+                android:layout_marginTop="4dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/categories"
-            android:textSize="@dimen/small_fontsize"
-            android:layout_below="@+id/bookCover"
-            android:layout_alignLeft="@+id/eancontainer"
-            android:layout_alignStart="@+id/eancontainer"
-            android:layout_gravity="center"
-            android:layout_marginTop="4dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/categories"
+                android:textSize="@dimen/small_fontsize"
+                android:layout_below="@+id/bookCover"
+                android:layout_alignLeft="@+id/eancontainer"
+                android:layout_alignStart="@+id/eancontainer"
+                android:layout_gravity="center"
+                android:layout_marginTop="4dp" />
 
-        <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/bookCover"
-            android:contentDescription="@string/book_cover"
-            android:layout_alignTop="@+id/authors"
-            android:layout_alignLeft="@+id/eancontainer"
-            android:layout_alignStart="@+id/eancontainer"
-            android:layout_gravity="center"
-            android:scaleType="fitCenter"
-            android:layout_marginTop="4dp" />
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/bookCover"
+                android:contentDescription="@string/book_cover"
+                android:layout_alignTop="@+id/authors"
+                android:layout_alignLeft="@+id/eancontainer"
+                android:layout_alignStart="@+id/eancontainer"
+                android:layout_gravity="center"
+                android:scaleType="fitCenter"
+                android:layout_marginTop="4dp" />
 
-    </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
 
     <LinearLayout
         android:orientation="horizontal"
