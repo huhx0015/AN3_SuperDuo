@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="toolbar_light_color">#8AD5F0</color>
+    <color name="toolbar_dark_color">#6DCAEC</color>
+</resources>

@@ -6,4 +6,5 @@
         <item name="colorPrimary">@color/toolbar_light_color</item>
         <item name="colorPrimaryDark">@color/toolbar_dark_color</item>
     </style>
+
 </resources>
