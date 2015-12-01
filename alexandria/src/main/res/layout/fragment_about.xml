@@ -1,9 +1,32 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context="it.jaschke.alexandria.fragments.About">
+    android:layout_height="match_parent" tools:context="it.jaschke.alexandria.fragments.About"
+    android:id="@+id/about_fragment_layout"
+    android:nestedScrollingEnabled="false"
+    android:padding="16dp">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="@string/about_text" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/about_fragment_main_container">
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="256dp"
+            android:id="@+id/about_image"
+            android:layout_gravity="center"
+            android:scaleType="fitCenter"
+            android:layout_marginBottom="8dp" />
+
+        <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+            android:text="@string/about_text"
+            android:id="@+id/about_text"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:typeface="sans"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+    </LinearLayout>
 
 </FrameLayout>
