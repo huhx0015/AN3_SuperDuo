@@ -122,6 +122,7 @@ public class ScoresWidgetService extends Service implements LoaderManager.Loader
 //                    "Random: " + String.valueOf(number));
 
         //ListView score_list = (ListView) remoteViews.findViewById(R.id.widget_scores_list);
+
         mAdapter = new ScoresAdapter(this,null,0);
         //score_list.setAdapter(mAdapter);
         //getLoaderManager().initLoader(SCORES_LOADER,null,this);
