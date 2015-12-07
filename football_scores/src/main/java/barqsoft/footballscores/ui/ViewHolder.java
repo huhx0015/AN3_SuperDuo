@@ -6,8 +6,11 @@ import android.widget.TextView;
 
 import barqsoft.footballscores.R;
 
-/**
- * Created by yehya khaled on 2/26/2015.
+/** -----------------------------------------------------------------------------------------------
+ *  [ViewHolder] CLASS
+ *  ORIGINAL DEVELOPER: Yehya Khaled
+ *  MODIFIED BY: Michael Yoon Huh (HUHX0015)
+ *  -----------------------------------------------------------------------------------------------
  */
 public class ViewHolder {
 

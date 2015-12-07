@@ -18,9 +18,13 @@ import java.util.Date;
 import barqsoft.footballscores.R;
 import barqsoft.footballscores.activities.MainActivity;
 
-/**
- * Created by yehya khaled on 2/27/2015.
+/** -----------------------------------------------------------------------------------------------
+ *  [PagerFragment] CLASS
+ *  ORIGINAL DEVELOPER: Yehya Khaled
+ *  MODIFIED BY: Michael Yoon Huh (HUHX0015)
+ *  -----------------------------------------------------------------------------------------------
  */
+
 public class PagerFragment extends Fragment {
 
     /** CLASS VARIABLES ________________________________________________________________________ **/

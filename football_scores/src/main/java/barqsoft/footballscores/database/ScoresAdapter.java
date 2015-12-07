@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v4.widget.CursorAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +12,17 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import barqsoft.footballscores.R;
+import barqsoft.footballscores.service.ScoresFetchService;
 import barqsoft.footballscores.ui.ViewHolder;
 import barqsoft.footballscores.utilities.Utilities;
 
-/**
- * Created by yehya khaled on 2/26/2015.
+/** -----------------------------------------------------------------------------------------------
+ *  [ScoresAdapter] CLASS
+ *  ORIGINAL DEVELOPER: Yehya Khaled
+ *  MODIFIED BY: Michael Yoon Huh (HUHX0015)
+ *  -----------------------------------------------------------------------------------------------
  */
+
 public class ScoresAdapter extends CursorAdapter {
 
     /** CLASS VARIABLES ________________________________________________________________________ **/
@@ -30,7 +36,7 @@ public class ScoresAdapter extends CursorAdapter {
     public static final int COL_MATCHDAY = 9;
     public static final int COL_ID = 8;
     public static final int COL_MATCHTIME = 2;
-    public double detail_match_id = 0;
+    public double detailMatchId = 0;
     private String FOOTBALL_SCORES_HASHTAG = "#Football_Scores";
 
     /** INITIALIZATION METHODS _________________________________________________________________ **/
@@ -46,7 +52,7 @@ public class ScoresAdapter extends CursorAdapter {
         View mItem = LayoutInflater.from(context).inflate(R.layout.scores_list_item, parent, false);
         ViewHolder mHolder = new ViewHolder(mItem);
         mItem.setTag(mHolder);
-        //Log.v(FetchScoreTask.LOG_TAG,"new View inflated");
+        Log.v(ScoresFetchService.LOG_TAG, "newView(): newView inflated.");
         return mItem;
     }
 
@@ -63,15 +69,15 @@ public class ScoresAdapter extends CursorAdapter {
         mHolder.away_crest.setImageResource(Utilities.getTeamCrestByTeamName(
                 cursor.getString(COL_AWAY)
         ));
-        //Log.v(FetchScoreTask.LOG_TAG,mHolder.home_name.getText() + " Vs. " + mHolder.away_name.getText() +" id " + String.valueOf(mHolder.match_id));
-        //Log.v(FetchScoreTask.LOG_TAG,String.valueOf(detail_match_id));
+        Log.v(ScoresFetchService.LOG_TAG, mHolder.home_name.getText() + " Vs. " + mHolder.away_name.getText() + " id " + String.valueOf(mHolder.match_id));
+        Log.v(ScoresFetchService.LOG_TAG, String.valueOf(detailMatchId));
         LayoutInflater vi = (LayoutInflater) context.getApplicationContext()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = vi.inflate(R.layout.detail_fragment, null);
         ViewGroup container = (ViewGroup) view.findViewById(R.id.details_fragment_container);
 
-        if (mHolder.match_id == detail_match_id) {
-            //Log.v(FetchScoreTask.LOG_TAG,"will insert extraView");
+        if (mHolder.match_id == detailMatchId) {
+            Log.v(ScoresFetchService.LOG_TAG,"will insert extraView");
 
             container.addView(v, 0, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             TextView match_day = (TextView) v.findViewById(R.id.matchday_textview);
@@ -92,7 +98,6 @@ public class ScoresAdapter extends CursorAdapter {
         }
 
         else { container.removeAllViews(); }
-
     }
 
     public Intent createShareForecastIntent(String ShareText) {

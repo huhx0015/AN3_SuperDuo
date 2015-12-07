@@ -4,9 +4,13 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-/**
- * Created by yehya khaled on 2/25/2015.
+/** -----------------------------------------------------------------------------------------------
+ *  [ScoresDBHelper] CLASS
+ *  ORIGINAL DEVELOPER: Yehya Khaled
+ *  MODIFIED BY: Michael Yoon Huh (HUHX0015)
+ *  -----------------------------------------------------------------------------------------------
  */
+
 public class ScoresDBHelper extends SQLiteOpenHelper {
 
     /** CLASS VARIABLES ________________________________________________________________________ **/

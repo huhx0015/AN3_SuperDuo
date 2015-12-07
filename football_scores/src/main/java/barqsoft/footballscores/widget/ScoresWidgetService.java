@@ -28,6 +28,12 @@ import barqsoft.footballscores.database.ScoresAdapter;
 import barqsoft.footballscores.fragments.MainScreenFragment;
 import barqsoft.footballscores.service.ScoresFetchService;
 
+/** -----------------------------------------------------------------------------------------------
+ *  [ScoresWidgetService] CLASS
+ *  DEVELOPER: Michael Yoon Huh (HUHX0015)
+ *  -----------------------------------------------------------------------------------------------
+ */
+
 public class ScoresWidgetService extends Service implements LoaderManager.LoaderCallbacks<Cursor>{
 
     private static final String LOG = "de.vogella.android.widget.example";

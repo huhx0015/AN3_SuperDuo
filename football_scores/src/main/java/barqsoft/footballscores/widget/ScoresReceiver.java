@@ -4,9 +4,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-/**
- * Created by Michael Yoon Huh on 10/23/2015.
+/** -----------------------------------------------------------------------------------------------
+ *  [ScoresReceiver] CLASS
+ *  DEVELOPER: Michael Yoon Huh (HUHX0015)
+ *  -----------------------------------------------------------------------------------------------
  */
+
 public class ScoresReceiver extends BroadcastReceiver {
 
     @Override

@@ -9,6 +9,14 @@ import android.view.MenuItem;
 import barqsoft.footballscores.fragments.PagerFragment;
 import barqsoft.footballscores.R;
 
+/** -----------------------------------------------------------------------------------------------
+ *  [MainActivity] CLASS
+ *  ORIGINAL DEVELOPER: Yehya Khaled
+ *  MODIFIED BY: Michael Yoon Huh (HUHX0015)
+ *  DESCRIPTION: MainActivity is the main, default activity for this application.
+ *  -----------------------------------------------------------------------------------------------
+ */
+
 public class MainActivity extends AppCompatActivity {
 
     /** CLASS VARIABLES ________________________________________________________________________ **/
