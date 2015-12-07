@@ -8,9 +8,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 
-/**
- * Created by yehya khaled on 2/25/2015.
+/** -----------------------------------------------------------------------------------------------
+ *  [ScoresProvider] CLASS
+ *  ORIGINAL DEVELOPER: Yehya Khaled
+ *  MODIFIED BY: Michael Yoon Huh (HUHX0015)
+ *  -----------------------------------------------------------------------------------------------
  */
+
 public class ScoresProvider extends ContentProvider {
 
     /** CLASS VARIABLES ________________________________________________________________________ **/

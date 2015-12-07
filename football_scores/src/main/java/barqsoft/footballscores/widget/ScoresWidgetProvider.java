@@ -1,23 +1,18 @@
 package barqsoft.footballscores.widget;
 
-/**
- * Created by Michael Yoon Huh on 10/24/2015.
- */
-import java.util.Random;
-
 import android.annotation.SuppressLint;
-import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
-import android.appwidget.AppWidgetProviderInfo;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
-import android.widget.RemoteViews;
 
-import barqsoft.footballscores.R;
+/** -----------------------------------------------------------------------------------------------
+ *  [ScoresWidgetProvider] CLASS
+ *  DEVELOPER: Michael Yoon Huh (HUHX0015)
+ *  -----------------------------------------------------------------------------------------------
+ */
 
 public class ScoresWidgetProvider extends AppWidgetProvider {
 

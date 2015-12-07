@@ -6,11 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,18 +19,21 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 import java.util.Vector;
-
 import barqsoft.footballscores.database.DatabaseContract;
 import barqsoft.footballscores.R;
 
-/**
- * Created by yehya khaled on 3/2/2015.
+/** -----------------------------------------------------------------------------------------------
+ *  [ScoresFetchService] CLASS
+ *  ORIGINAL DEVELOPER: Yehya Khaled
+ *  MODIFIED BY: Michael Yoon Huh (HUHX0015)
+ *  -----------------------------------------------------------------------------------------------
  */
+
 public class ScoresFetchService extends IntentService {
 
     /** CLASS VARIABLES ________________________________________________________________________ **/
 
-    public static final String LOG_TAG = "myFetchService";
+    public static final String LOG_TAG = ScoresFetchService.class.getSimpleName();
     public ScoresFetchService()
     {
         super("myFetchService");

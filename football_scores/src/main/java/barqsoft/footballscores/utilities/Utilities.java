@@ -2,9 +2,13 @@ package barqsoft.footballscores.utilities;
 
 import barqsoft.footballscores.R;
 
-/**
- * Created by yehya khaled on 3/3/2015.
+/** -----------------------------------------------------------------------------------------------
+ *  [Utilities] CLASS
+ *  ORIGINAL DEVELOPER: Yehya Khaled
+ *  MODIFIED BY: Michael Yoon Huh (HUHX0015)
+ *  -----------------------------------------------------------------------------------------------
  */
+
 public class Utilities {
 
     /** CLASS VARIABLES ________________________________________________________________________ **/
