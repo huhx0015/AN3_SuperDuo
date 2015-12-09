@@ -1,8 +1,5 @@
 package barqsoft.footballscores.widget;
 
-/**
- * Created by Michael Yoon Huh on 10/24/2015.
- */
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
@@ -38,7 +35,7 @@ public class ScoresWidgetService extends Service implements LoaderManager.Loader
 
     private static final String LOG = "de.vogella.android.widget.example";
 
-    public ScoresAdapter mAdapter;
+    public ScoresAdapter scoresAdapter;
     private String[] fragmentdate = new String[1];
 
     private RemoteViews remoteViews;
@@ -89,7 +86,7 @@ public class ScoresWidgetService extends Service implements LoaderManager.Loader
 
             PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, clickIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
-            remoteViews.setOnClickPendingIntent(R.id.update, pendingIntent);
+            remoteViews.setOnClickPendingIntent(R.id.widget_scores_list, pendingIntent);
             appWidgetManager.updateAppWidget(widgetId, remoteViews);
         }
         stopSelf();
@@ -123,10 +120,10 @@ public class ScoresWidgetService extends Service implements LoaderManager.Loader
 
         //ListView score_list = (ListView) remoteViews.findViewById(R.id.widget_scores_list);
 
-        mAdapter = new ScoresAdapter(this,null,0);
-        //score_list.setAdapter(mAdapter);
+        scoresAdapter = new ScoresAdapter(this,null,0);
+        //score_list.setAdapter(scoresAdapter);
         //getLoaderManager().initLoader(SCORES_LOADER,null,this);
-        mAdapter.detail_match_id = MainActivity.selected_match_id;
+        scoresAdapter.detailMatchId = MainActivity.selected_match_id;
     }
 
 
@@ -137,8 +134,7 @@ public class ScoresWidgetService extends Service implements LoaderManager.Loader
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor)
-    {
+    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
         //Log.v(FetchScoreTask.LOG_TAG,"loader finished");
         //cursor.moveToFirst();
         /*
@@ -159,13 +155,12 @@ public class ScoresWidgetService extends Service implements LoaderManager.Loader
 
 
         //Log.v(FetchScoreTask.LOG_TAG,"Loader query: " + String.valueOf(i));
-        mAdapter.swapCursor(cursor);
-        //mAdapter.notifyDataSetChanged();
+        scoresAdapter.swapCursor(cursor);
+        //scoresAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> cursorLoader)
-    {
-        mAdapter.swapCursor(null);
+    public void onLoaderReset(Loader<Cursor> cursorLoader) {
+        scoresAdapter.swapCursor(null);
     }
 }

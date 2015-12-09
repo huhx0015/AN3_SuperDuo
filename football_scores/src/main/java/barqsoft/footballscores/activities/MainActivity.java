@@ -34,8 +34,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Log.d(LOG_TAG, "Reached MainActivity onCreate");
-
         if (savedInstanceState == null) {
             my_main = new PagerFragment();
             getSupportFragmentManager().beginTransaction()
@@ -74,9 +72,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         Log.v(save_tag,"will save");
-        Log.v(save_tag,"fragment: "+String.valueOf(my_main.mPagerHandler.getCurrentItem()));
+        Log.v(save_tag,"fragment: "+String.valueOf(my_main.gameDayViewPager.getCurrentItem()));
         Log.v(save_tag,"selected id: "+selected_match_id);
-        outState.putInt("Pager_Current",my_main.mPagerHandler.getCurrentItem());
+        outState.putInt("Pager_Current",my_main.gameDayViewPager.getCurrentItem());
         outState.putInt("Selected_match",selected_match_id);
         getSupportFragmentManager().putFragment(outState,"my_main",my_main);
         super.onSaveInstanceState(outState);
