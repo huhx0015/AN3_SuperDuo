@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import android.util.Log;
 
 /** -----------------------------------------------------------------------------------------------
  *  [ScoresProvider] CLASS
@@ -32,6 +33,8 @@ public class ScoresProvider extends ContentProvider {
             DatabaseContract.scores_table.DATE_COL + " LIKE ?";
     private static final String SCORES_BY_ID =
             DatabaseContract.scores_table.MATCH_ID + " = ?";
+
+    private static final String LOG_TAG = ScoresProvider.class.getSimpleName();
 
     static UriMatcher buildUriMatcher() {
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -125,7 +128,14 @@ public class ScoresProvider extends ContentProvider {
             default: throw new UnsupportedOperationException("Unknown Uri" + uri);
         }
 
-        retCursor.setNotificationUri(getContext().getContentResolver(),uri);
+        // Null pointer exception handling.
+        try {
+            retCursor.setNotificationUri(getContext().getContentResolver(),uri);
+        }
+        catch (NullPointerException e) {
+            Log.e(LOG_TAG, "ERROR: Content resolver was null.");
+        }
+
         return retCursor;
     }
 
@@ -164,7 +174,14 @@ public class ScoresProvider extends ContentProvider {
                     db.endTransaction();
                 }
 
-                getContext().getContentResolver().notifyChange(uri,null);
+                // Null pointer exception handling.
+                try {
+                    getContext().getContentResolver().notifyChange(uri,null);
+                }
+                catch (NullPointerException e) {
+                    Log.e(LOG_TAG, "ERROR: Content resolver was null.");
+                }
+
                 return returncount;
 
             default:

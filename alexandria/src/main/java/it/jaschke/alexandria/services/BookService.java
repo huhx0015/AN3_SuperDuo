@@ -87,12 +87,15 @@ public class BookService extends IntentService {
                 null  // sort order
         );
 
-        if (bookEntry.getCount()>0){
-            bookEntry.close();
-            return;
-        }
+        // Checks to see if bookEntry is null or not.
+        if (bookEntry != null) {
+            if (bookEntry.getCount() > 0) {
+                bookEntry.close();
+                return;
+            }
 
-        bookEntry.close();
+            bookEntry.close();
+        }
 
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
@@ -115,7 +118,7 @@ public class BookService extends IntentService {
             urlConnection.connect();
 
             InputStream inputStream = urlConnection.getInputStream();
-            StringBuffer buffer = new StringBuffer();
+            StringBuilder buffer = new StringBuilder();
             if (inputStream == null) {
                 return;
             }

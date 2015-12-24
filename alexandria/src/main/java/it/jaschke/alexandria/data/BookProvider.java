@@ -1,6 +1,7 @@
 package it.jaschke.alexandria.data;
 
 import android.content.ContentProvider;
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
@@ -35,6 +36,8 @@ public class BookProvider extends ContentProvider {
     private DbHelper dbHelper;
 
     private static final SQLiteQueryBuilder bookFull;
+
+    private static final String LOG_TAG = BookProvider.class.getSimpleName();
 
     static{
         bookFull = new SQLiteQueryBuilder();
@@ -177,7 +180,13 @@ public class BookProvider extends ContentProvider {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
 
-        retCursor.setNotificationUri(getContext().getContentResolver(), uri);
+        // Null pointer exception handling.
+        try {
+            retCursor.setNotificationUri(getContext().getContentResolver(), uri);
+        }
+        catch (NullPointerException e) {
+            Log.e(LOG_TAG, "ERROR: Content resolver was null.");
+        }
 
         return retCursor;
     }
@@ -221,7 +230,15 @@ public class BookProvider extends ContentProvider {
                 } else {
                     throw new android.database.SQLException("Failed to insert row into " + uri);
                 }
-                getContext().getContentResolver().notifyChange(AlexandriaContract.BookEntry.buildFullBookUri(_id), null);
+
+                // Null pointer exception handling.
+                ContentResolver contentResolver;
+                try {
+                    getContext().getContentResolver().notifyChange(AlexandriaContract.BookEntry.buildFullBookUri(_id), null);
+                }
+                catch (NullPointerException e) {
+                    Log.e(LOG_TAG, "ERROR: Content resolver was null.");
+                }
                 break;
             }
             case AUTHOR:{
@@ -275,7 +292,14 @@ public class BookProvider extends ContentProvider {
         }
         // Because a null deletes all rows
         if (selection == null || rowsDeleted != 0) {
-            getContext().getContentResolver().notifyChange(uri, null);
+
+            // Null pointer exception handling.
+            try {
+                getContext().getContentResolver().notifyChange(uri, null);
+            }
+            catch (NullPointerException e) {
+                Log.e(LOG_TAG, "ERROR: Content resolver was null.");
+            }
         }
         return rowsDeleted;
     }
@@ -303,7 +327,14 @@ public class BookProvider extends ContentProvider {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
         if (rowsUpdated != 0) {
-            getContext().getContentResolver().notifyChange(uri, null);
+
+            // Null pointer exception handling.
+            try {
+                getContext().getContentResolver().notifyChange(uri, null);
+            }
+            catch (NullPointerException e) {
+                Log.e(LOG_TAG, "ERROR: Content resolver was null.");
+            }
         }
         return rowsUpdated;
     }

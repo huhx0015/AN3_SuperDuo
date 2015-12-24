@@ -161,10 +161,15 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     /** LAYOUT METHODS _________________________________________________________________________ **/
 
     public void restoreActionBar() {
+
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(title);
+
+        // Checks to see if the ActionBar is null or not before applying custom ActionBar attributes.
+        if (actionBar != null) {
+            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+            actionBar.setDisplayShowTitleEnabled(true);
+            actionBar.setTitle(title);
+        }
     }
 
     public void setTitle(int titleId) {
