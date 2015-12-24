@@ -15,7 +15,8 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:padding="8dp">
+        android:padding="8dp"
+        android:layout_marginTop="4dp">
 
         <EditText
             android:layout_width="fill_parent"
@@ -26,9 +27,13 @@
             android:saveEnabled="true"
             android:maxLength="@integer/ean_size"
             android:maxLines="1"
+            android:textColor="@color/blue_grey_text_color"
+            android:textColorHint="@color/blue_grey_hint_text_color"
             android:hint="@string/input_hint"
             android:paddingRight="20dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:layout_marginRight="4dp" />
 
         <Button
             android:layout_width="wrap_content"
@@ -37,7 +42,7 @@
             android:id="@+id/scan_button"
             android:layout_gravity="center"
             android:textSize="10sp"
-            android:background="@android:drawable/btn_default" />
+            android:gravity="center" />
 
     </LinearLayout>
 

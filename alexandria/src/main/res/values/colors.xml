@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="toolbar_light_color">#8AD5F0</color>
-    <color name="toolbar_dark_color">#6DCAEC</color>
+    <color name="toolbar_light_color">#4DB6AC</color>
+    <color name="toolbar_dark_color">#26A69A</color>
+    <color name="blue_grey_text_color">#607D8B</color>
+    <color name="blue_grey_hint_text_color">#B0BEC5</color>
 </resources>

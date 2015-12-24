@@ -30,7 +30,7 @@ import it.jaschke.alexandria.R;
 /** -----------------------------------------------------------------------------------------------
  *  [ScannerActivity] CLASS
  *  DESCRIPTION: ScannerActivity is an Activity class that initializes the use of the Scandit
- *  barcode scanner.
+ *  barcode scanner. This activity is adapted from code found in the Scandit SDK sample application.
  *  -----------------------------------------------------------------------------------------------
  */
 
