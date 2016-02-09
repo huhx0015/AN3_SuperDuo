@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /** ACTIVITY EXTENSION METHODS _____________________________________________________________  **/
+    /** ACTIVITY EXTENSION METHODS _____________________________________________________________ **/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -52,9 +52,9 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    // onOptionsItemSelected():         // Handles action bar item clicks here. The action bar will
-    // automatically handle clicks on the Home/Up button, so long
-    // as you specify a parent activity in AndroidManifest.xml.
+    // onOptionsItemSelected(): Handles action bar item clicks here. The action bar will
+    // automatically handle clicks on the Home/Up button, so long as you specify a parent activity
+    // in AndroidManifest.xml.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();

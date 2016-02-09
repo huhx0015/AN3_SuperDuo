@@ -13,6 +13,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+
+import com.github.clans.fab.FloatingActionButton;
+
+import butterknife.Bind;
 import it.jaschke.alexandria.R;
 import it.jaschke.alexandria.api.BookListAdapter;
 import it.jaschke.alexandria.api.Callback;
@@ -27,6 +31,10 @@ public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbac
     private ListView bookList;
     private final int LOADER_ID = 10;
     private int position = ListView.INVALID_POSITION;
+
+    // VIEW INJECTION VARIABLES
+    @Bind(R.id.list_of_books_fab_add_book_button) FloatingActionButton addBookButton;
+    @Bind(R.id.list_of_books_fab_scan_book_button) FloatingActionButton scanBookButton;
 
     /** INITIALIZATION METHODS _________________________________________________________________ **/
 

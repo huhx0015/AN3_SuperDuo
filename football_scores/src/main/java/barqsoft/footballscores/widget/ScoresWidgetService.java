@@ -3,12 +3,15 @@ package barqsoft.footballscores.widget;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
+
+import android.annotation.TargetApi;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.LoaderManager;
@@ -17,6 +20,7 @@ import android.support.v4.content.Loader;
 import android.util.Log;
 import android.widget.ListView;
 import android.widget.RemoteViews;
+import android.widget.RemoteViewsService;
 
 import barqsoft.footballscores.R;
 import barqsoft.footballscores.activities.MainActivity;
@@ -31,7 +35,8 @@ import barqsoft.footballscores.service.ScoresFetchService;
  *  -----------------------------------------------------------------------------------------------
  */
 
-public class ScoresWidgetService extends Service implements LoaderManager.LoaderCallbacks<Cursor>{
+@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+public class ScoresWidgetService extends RemoteViewsService implements LoaderManager.LoaderCallbacks<Cursor>{
 
     private static final String LOG = "de.vogella.android.widget.example";
 
@@ -99,6 +104,11 @@ public class ScoresWidgetService extends Service implements LoaderManager.Loader
         return null;
     }
 
+    @Override
+    public RemoteViewsFactory onGetViewFactory(Intent intent) {
+        return (new WidgetRemoteViewsFactory(this.getApplicationContext(), intent));
+    }
+
     private void update_scores() {
         Intent service_start = new Intent(this, ScoresFetchService.class);
         startService(service_start);
@@ -121,6 +131,10 @@ public class ScoresWidgetService extends Service implements LoaderManager.Loader
         //ListView score_list = (ListView) remoteViews.findViewById(R.id.widget_scores_list);
 
         scoresAdapter = new ScoresAdapter(this,null,0);
+
+        // TODO: Experimental.
+        //remoteViews.setRemoteAdapter(R.id.widget_scores_list, intent);
+
         //score_list.setAdapter(scoresAdapter);
         //getLoaderManager().initLoader(SCORES_LOADER,null,this);
         scoresAdapter.detailMatchId = MainActivity.selected_match_id;
@@ -156,7 +170,7 @@ public class ScoresWidgetService extends Service implements LoaderManager.Loader
 
         //Log.v(FetchScoreTask.LOG_TAG,"Loader query: " + String.valueOf(i));
         scoresAdapter.swapCursor(cursor);
-        //scoresAdapter.notifyDataSetChanged();
+        scoresAdapter.notifyDataSetChanged();
     }
 
     @Override

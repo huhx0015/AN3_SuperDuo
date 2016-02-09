@@ -183,10 +183,12 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
 
     /** LAYOUT METHODS _________________________________________________________________________ **/
 
+    // setupLayout(): Sets up the layout for the fragment.
     private void setupLayout() {
         setupButtons();
     }
 
+    // setupButtons(): Sets up the buttons for the fragment.
     private void setupButtons() {
 
         ean.addTextChangedListener(new TextWatcher() {

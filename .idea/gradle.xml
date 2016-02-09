@@ -8,6 +8,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/Application" />
             <option value="$PROJECT_DIR$/alexandria" />
             <option value="$PROJECT_DIR$/an3_library" />
             <option value="$PROJECT_DIR$/football_scores" />
@@ -16,6 +17,7 @@
         <option name="myModules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/Application" />
             <option value="$PROJECT_DIR$/alexandria" />
             <option value="$PROJECT_DIR$/an3_library" />
             <option value="$PROJECT_DIR$/football_scores" />

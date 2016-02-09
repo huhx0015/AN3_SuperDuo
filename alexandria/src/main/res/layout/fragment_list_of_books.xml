@@ -1,6 +1,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context="it.jaschke.alexandria.fragments.ListOfBooks">
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="it.jaschke.alexandria.fragments.ListOfBooks">
 
     <RelativeLayout
         android:orientation="vertical"
@@ -48,8 +51,50 @@
                   android:layout_alignParentStart="true"
                   android:layout_toRightOf="@id/searchButton"/>
 
-
-
     </RelativeLayout>
+
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/list_of_books_fab_menu_button"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        fab:menu_colorNormal="@color/fab_normal_color"
+        fab:menu_colorPressed="@color/fab_pressed_color"
+        fab:menu_colorRipple="@color/fab_ripple_color"
+        fab:menu_shadowColor="#000"
+        fab:menu_icon="@drawable/ic_add_black_24dp"
+        fab:menu_animationDelayPerItem="0"
+        fab:menu_labels_maxLines="2"
+        fab:menu_labels_ellipsize="end"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="16dp">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/list_of_books_fab_add_book_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add_black_24dp"
+            fab:fab_colorNormal="@color/fab_normal_color"
+            fab:fab_colorPressed="@color/fab_pressed_color"
+            fab:fab_colorRipple="@color/fab_ripple_color"
+            fab:fab_shadowColor="#000"
+            fab:fab_size="mini"
+            fab:fab_label="@string/add_book"/>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/list_of_books_fab_scan_book_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add_black_24dp"
+            fab:fab_colorNormal="@color/fab_normal_color"
+            fab:fab_colorPressed="@color/fab_pressed_color"
+            fab:fab_colorRipple="@color/fab_ripple_color"
+            fab:fab_shadowColor="#000"
+            fab:fab_size="mini"
+            fab:fab_label="@string/scan_book"/>
+
+    </com.github.clans.fab.FloatingActionMenu>
+
 
 </FrameLayout>
