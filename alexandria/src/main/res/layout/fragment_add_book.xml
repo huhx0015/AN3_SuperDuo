@@ -1,8 +1,7 @@
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="it.jaschke.alexandria.fragments.AddBook"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/add_book_fragment_layout">
@@ -10,7 +9,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:id="@+id/eancontainer"
+        android:id="@+id/isbn_input_container"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
@@ -35,15 +34,6 @@
             android:layout_gravity="center"
             android:layout_marginRight="4dp" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/scan_button"
-            android:id="@+id/scan_button"
-            android:layout_gravity="center"
-            android:textSize="10sp"
-            android:gravity="center" />
-
     </LinearLayout>
 
     <android.support.v7.widget.CardView
@@ -57,7 +47,10 @@
         card_view:cardUseCompatPadding="true"
         android:elevation="8dp"
         android:padding="8dp"
-        android:id="@+id/add_book_center_container">
+        android:id="@+id/add_book_center_container"
+        android:layout_gravity="center"
+        android:visibility="invisible">
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -67,6 +60,18 @@
             android:layout_weight="1"
             android:id="@+id/add_book_center_subcontainer">
 
+            <ImageView
+                android:layout_width="192dp"
+                android:layout_height="192dp"
+                android:id="@+id/bookCover"
+                android:contentDescription="@string/book_cover"
+                android:layout_alignTop="@+id/authors"
+                android:layout_alignLeft="@+id/eancontainer"
+                android:layout_alignStart="@+id/eancontainer"
+                android:layout_gravity="center"
+                android:scaleType="fitCenter"
+                android:layout_marginTop="4dp" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -74,11 +79,12 @@
                 android:textSize="@dimen/head_line"
                 android:textIsSelectable="true"
                 android:textStyle="bold"
-                android:paddingRight="20dp"
                 android:layout_below="@+id/eancontainer"
                 android:layout_alignLeft="@+id/eancontainer"
                 android:layout_alignStart="@+id/eancontainer"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:textColor="@android:color/black"
+                android:layout_marginTop="8dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -89,7 +95,8 @@
                 android:maxLines="3"
                 android:ellipsize="end"
                 android:layout_alignLeft="@+id/eancontainer"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:textColor="@android:color/black" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -101,7 +108,8 @@
                 android:layout_alignRight="@+id/eancontainer"
                 android:layout_alignEnd="@+id/eancontainer"
                 android:layout_gravity="center"
-                android:layout_marginTop="4dp" />
+                android:layout_marginTop="4dp"
+                android:textColor="@android:color/black" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -112,27 +120,17 @@
                 android:layout_alignLeft="@+id/eancontainer"
                 android:layout_alignStart="@+id/eancontainer"
                 android:layout_gravity="center"
-                android:layout_marginTop="4dp" />
-
-            <ImageView
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:id="@+id/bookCover"
-                android:contentDescription="@string/book_cover"
-                android:layout_alignTop="@+id/authors"
-                android:layout_alignLeft="@+id/eancontainer"
-                android:layout_alignStart="@+id/eancontainer"
-                android:layout_gravity="center"
-                android:scaleType="fitCenter"
-                android:layout_marginTop="4dp" />
+                android:textColor="@android:color/black"
+                android:layout_marginBottom="8dp" />
 
         </LinearLayout>
+
     </android.support.v7.widget.CardView>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="50dip"
+        android:layout_height="56dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -140,28 +138,41 @@
         android:id="@+id/bottom_button_container">
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:text="@string/cancel_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/scan_button"
+            android:id="@+id/scan_button"
+            android:layout_gravity="center"
+            android:textSize="14sp"
+            android:gravity="center"
             android:layout_weight="1"
-            style="?android:attr/buttonBarButtonStyle"
-            android:id="@+id/delete_button"
-            android:drawableLeft="@drawable/ic_action_discard"
-            android:visibility="invisible"
-            />
+            android:typeface="sans" />
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:text="@string/ok_button"
-            android:visibility="invisible"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/next_button"
+            android:visibility="gone"
             android:layout_weight="1"
             android:id="@+id/save_button"
             android:drawableLeft="@drawable/ic_action_accept"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_gravity="bottom"
-            />
+            android:typeface="sans"
+            android:textSize="14sp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/cancel_button"
+            android:layout_weight="1"
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/delete_button"
+            android:drawableLeft="@drawable/ic_action_discard"
+            android:visibility="gone"
+            android:textSize="14sp"
+            android:typeface="sans" />
 
     </LinearLayout>
 
-</LinearLayout>
+</FrameLayout>

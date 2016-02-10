@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
+import android.support.v7.widget.CardView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Patterns;
@@ -48,7 +49,8 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     @Bind(R.id.delete_button) Button deleteButton;
     @Bind(R.id.scan_button) Button scanButton;
     @Bind(R.id.save_button) Button saveButton;
-    @Bind(R.id.ean) EditText ean;
+    @Bind(R.id.add_book_center_container) CardView bookContainer;
+    @Bind(R.id.ean) EditText isbnField;
     @Bind(R.id.bookCover) ImageView bookCoverImage;
     @Bind(R.id.bookTitle) TextView bookTitle;
     @Bind(R.id.bookSubTitle) TextView bookSubtitle;
@@ -77,8 +79,8 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
         setupLayout();
 
         if (savedInstanceState != null){
-            ean.setText(savedInstanceState.getString(EAN_CONTENT));
-            ean.setHint("");
+            isbnField.setText(savedInstanceState.getString(EAN_CONTENT));
+            isbnField.setHint("");
         }
 
         return rootView;
@@ -101,7 +103,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
             if (data != null) {
                 Bundle bundle = data.getExtras();
                 String barcodeMessage = bundle.getString(SCAN_RESULTS);
-                ean.setText(barcodeMessage);
+                isbnField.setText(barcodeMessage);
             }
         }
     }
@@ -109,8 +111,8 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (ean != null) {
-            outState.putString(EAN_CONTENT, ean.getText().toString());
+        if (isbnField != null) {
+            outState.putString(EAN_CONTENT, isbnField.getText().toString());
         }
     }
 
@@ -119,13 +121,13 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     @Override
     public android.support.v4.content.Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
-        if(ean.getText().length()==0){
+        if (isbnField.getText().length()==0){
             return null;
         }
 
-        String eanStr= ean.getText().toString();
+        String eanStr = isbnField.getText().toString();
 
-        if(eanStr.length()==10 && !eanStr.startsWith("978")){
+        if (eanStr.length() == 10 && !eanStr.startsWith("978")){
             eanStr="978"+eanStr;
         }
 
@@ -187,12 +189,49 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     // setupLayout(): Sets up the layout for the fragment.
     private void setupLayout() {
         setupButtons();
+        setupInput();
     }
 
     // setupButtons(): Sets up the buttons for the fragment.
     private void setupButtons() {
 
-        ean.addTextChangedListener(new TextWatcher() {
+        // SCAN BUTTON:
+        scanButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                launchScanIntent(); // Launches an intent to start the ScannerActivity.
+            }
+        });
+
+        // SAVE BUTTON:
+        saveButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        // DELETE BUTTON:
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent bookIntent = new Intent(getActivity(), BookService.class);
+                bookIntent.putExtra(BookService.EAN, isbnField.getText().toString());
+                bookIntent.setAction(BookService.DELETE_BOOK);
+                getActivity().startService(bookIntent);
+                isbnField.setText("");
+            }
+        });
+    }
+
+    // setupInput(): Sets up the TextWatcher for the EditText objects for this fragment.
+    private void setupInput() {
+
+        // ISBN Input Field:
+        isbnField.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -205,58 +244,44 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
 
                 String ean = s.toString();
 
-                //catch isbn10 numbers
+                // Catches ISBN10 numbers.
                 if (ean.length() == 10 && !ean.startsWith("978")) {
                     ean = "978" + ean;
                 }
+
+                // The fields and v
                 if (ean.length() < 13) {
-                    clearFields();
+                    clearFields(); // Clears the TextView fields and hides the buttons.
                     return;
                 }
 
-                // Checks to see if the device is currently connected to the internet.
-                QueryTask task = new QueryTask();
-                task.execute(ean);
-            }
-        });
-
-        scanButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                launchScanIntent(); // Launches an intent to start the ScannerActivity.
-            }
-        });
-
-        saveButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {}
-        });
-
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                Intent bookIntent = new Intent(getActivity(), BookService.class);
-                bookIntent.putExtra(BookService.EAN, ean.getText().toString());
-                bookIntent.setAction(BookService.DELETE_BOOK);
-                getActivity().startService(bookIntent);
-                ean.setText("");
+                // Attempts to retrieve book data on the associated ISBN code in the background.
+                else {
+                    QueryTask task = new QueryTask();
+                    task.execute(ean);
+                }
             }
         });
     }
 
+    // clearFields(): This method clears the TextView fields inside the container and sets the
+    // visibility of the book container and buttons.
     private void clearFields(){
+
+        // Clears the TextView fields inside the book container view.
         bookTitle.setText("");
         bookSubtitle.setText("");
         authorsText.setText("");
         categoriesText.setText("");
-        bookCoverImage.setVisibility(View.INVISIBLE);
-        saveButton.setVisibility(View.INVISIBLE);
-        deleteButton.setVisibility(View.INVISIBLE);
+
+        // Sets the visibility of the View objects in this layout.
+        bookContainer.setVisibility(View.INVISIBLE);
+        saveButton.setVisibility(View.GONE);
+        deleteButton.setVisibility(View.GONE);
+        scanButton.setVisibility(View.VISIBLE);
     }
 
+    // retrieveBookData(): Retrieves the data on the book associated with the ISBN code.
     private void retrieveBookData(String isbnCode) {
         Intent bookIntent = new Intent(getActivity(), BookService.class);
         bookIntent.putExtra(BookService.EAN, isbnCode);
@@ -306,7 +331,11 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
             super.onPostExecute(aVoid);
 
             // Retrieves the book data based on the ISBN code.
-            if (isConnected) { retrieveBookData(isbnCode); }
+            if (isConnected) {
+                retrieveBookData(isbnCode); // Retrieves the data of the queried book.
+                bookContainer.setVisibility(View.VISIBLE); // Makes the book container visible.
+                scanButton.setVisibility(View.GONE); // Hides the scan button.
+            }
         }
     }
 }

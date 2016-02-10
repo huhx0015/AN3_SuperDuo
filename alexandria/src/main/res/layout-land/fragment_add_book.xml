@@ -114,8 +114,8 @@
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:contentDescription="@string/ok_button"
-                android:text="@string/ok_button"
+                android:contentDescription="@string/next_button"
+                android:text="@string/next_button"
                 android:layout_weight="1"
                 android:id="@+id/save_button"
                 android:visibility="invisible"
