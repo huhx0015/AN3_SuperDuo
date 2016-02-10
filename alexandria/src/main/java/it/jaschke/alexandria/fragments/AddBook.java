@@ -50,7 +50,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     @Bind(R.id.scan_button) Button scanButton;
     @Bind(R.id.save_button) Button saveButton;
     @Bind(R.id.add_book_center_container) CardView bookContainer;
-    @Bind(R.id.ean) EditText isbnField;
+    @Bind(R.id.isbnField) EditText isbnField;
     @Bind(R.id.bookCover) ImageView bookCoverImage;
     @Bind(R.id.bookTitle) TextView bookTitle;
     @Bind(R.id.bookSubTitle) TextView bookSubtitle;
@@ -166,15 +166,17 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
         String imgUrl = data.getString(data.getColumnIndex(AlexandriaContract.BookEntry.IMAGE_URL));
 
         if (Patterns.WEB_URL.matcher(imgUrl).matches()){
-            new DownloadImage((ImageView) rootView.findViewById(R.id.bookCover)).execute(imgUrl);
-            rootView.findViewById(R.id.bookCover).setVisibility(View.VISIBLE);
+            new DownloadImage(bookCoverImage).execute(imgUrl);
+            bookCoverImage.setVisibility(View.VISIBLE);
         }
 
         String categories = data.getString(data.getColumnIndex(AlexandriaContract.CategoryEntry.CATEGORY));
-        ((TextView) rootView.findViewById(R.id.categories)).setText(categories);
+        categoriesText.setText(categories);
 
-        rootView.findViewById(R.id.save_button).setVisibility(View.VISIBLE);
-        rootView.findViewById(R.id.delete_button).setVisibility(View.VISIBLE);
+        bookContainer.setVisibility(View.VISIBLE); // Makes the book container visible.
+        scanButton.setVisibility(View.GONE); // Hides the scan button.
+        saveButton.setVisibility(View.VISIBLE); // Makes the save button visible.
+        deleteButton.setVisibility(View.VISIBLE); // Makes the delete button visible.
     }
 
     @Override
@@ -333,8 +335,6 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
             // Retrieves the book data based on the ISBN code.
             if (isConnected) {
                 retrieveBookData(isbnCode); // Retrieves the data of the queried book.
-                bookContainer.setVisibility(View.VISIBLE); // Makes the book container visible.
-                scanButton.setVisibility(View.GONE); // Hides the scan button.
             }
         }
     }

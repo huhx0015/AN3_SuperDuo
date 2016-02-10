@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:inputType="number"
             android:minEms="@integer/ean_width"
-            android:id="@+id/ean"
+            android:id="@+id/isbnField"
             android:saveEnabled="true"
             android:maxLength="@integer/ean_size"
             android:maxLines="1"

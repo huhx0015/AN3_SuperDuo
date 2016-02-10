@@ -13,7 +13,7 @@
             android:layout_height="wrap_content"
             android:inputType="number"
             android:minEms="@integer/ean_width"
-            android:id="@+id/ean"
+            android:id="@+id/isbnField"
             android:saveEnabled="true"
             android:textIsSelectable="false"
             android:maxLength="@integer/ean_size"
@@ -33,9 +33,9 @@
             android:id="@+id/scan_button"
             android:layout_marginLeft="23dp"
             android:layout_marginStart="23dp"
-            android:layout_alignBottom="@+id/ean"
-            android:layout_toRightOf="@+id/ean"
-            android:layout_toEndOf="@+id/ean"/>
+            android:layout_alignBottom="@+id/isbnField"
+            android:layout_toRightOf="@+id/isbnField"
+            android:layout_toEndOf="@+id/isbnField"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -45,8 +45,8 @@
             android:textIsSelectable="true"
             android:textStyle="bold"
             android:layout_below="@+id/scan_button"
-            android:layout_alignLeft="@+id/ean"
-            android:layout_alignStart="@+id/ean"
+            android:layout_alignLeft="@+id/isbnField"
+            android:layout_alignStart="@+id/isbnField"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"/>
