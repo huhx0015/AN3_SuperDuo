@@ -33,7 +33,7 @@ public class About extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         this.currentActivity = activity;
-        activity.setTitle(R.string.about);
+        activity.setTitle(R.string.drawer_about);
     }
 
     @Override

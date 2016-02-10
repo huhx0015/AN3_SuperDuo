@@ -41,7 +41,4 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':an3_library')
     compile files('libs/scanditsdk-android-4.8.1.jar')
-
-    // THIRD PARTY LIBRARIES:
-    compile 'com.github.clans:fab:1.6.2'
 }

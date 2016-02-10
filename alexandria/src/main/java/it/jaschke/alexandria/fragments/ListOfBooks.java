@@ -3,6 +3,7 @@ package it.jaschke.alexandria.fragments;
 import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -13,11 +14,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
-
-import com.github.clans.fab.FloatingActionButton;
-
 import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import it.jaschke.alexandria.R;
+import it.jaschke.alexandria.activities.MainActivity;
 import it.jaschke.alexandria.api.BookListAdapter;
 import it.jaschke.alexandria.api.Callback;
 import it.jaschke.alexandria.data.AlexandriaContract;
@@ -26,18 +27,19 @@ public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbac
 
     /** CLASS VARIABLES ________________________________________________________________________ **/
 
+    private Activity currentActivity;
     private BookListAdapter bookListAdapter;
-    private EditText searchText;
-    private ListView bookList;
     private final int LOADER_ID = 10;
     private int position = ListView.INVALID_POSITION;
 
     // VIEW INJECTION VARIABLES
-    @Bind(R.id.list_of_books_fab_add_book_button) FloatingActionButton addBookButton;
-    @Bind(R.id.list_of_books_fab_scan_book_button) FloatingActionButton scanBookButton;
+    @Bind(R.id.list_of_books_fab_button) FloatingActionButton addBookButton;
+    @Bind(R.id.listOfBooks) ListView bookList;
+    @Bind(R.id.searchText) EditText searchText;
 
     /** INITIALIZATION METHODS _________________________________________________________________ **/
 
+    // ListOfBooks(): Default constructor for this fragment class.
     public ListOfBooks() {}
 
     /** FRAGMENT LIFECYCLE METHODS _____________________________________________________________ **/
@@ -45,12 +47,7 @@ public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbac
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        activity.setTitle(R.string.books);
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        currentActivity = activity;
     }
 
     @Override
@@ -65,18 +62,10 @@ public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbac
         );
 
         bookListAdapter = new BookListAdapter(getActivity(), cursor, 0);
-        View rootView = inflater.inflate(R.layout.fragment_list_of_books, container, false);
-        searchText = (EditText) rootView.findViewById(R.id.searchText);
-        rootView.findViewById(R.id.searchButton).setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ListOfBooks.this.restartLoader();
-                    }
-                }
-        );
 
-        bookList = (ListView) rootView.findViewById(R.id.listOfBooks);
+        View rootView = inflater.inflate(R.layout.fragment_list_of_books, container, false);
+        ButterKnife.bind(this, rootView);
+
         bookList.setAdapter(bookListAdapter);
 
         bookList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -92,6 +81,26 @@ public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbac
         });
 
         return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
+
+    /** LAYOUT METHODS _________________________________________________________________________ **/
+
+    // addFloatingActionButtonClick(): Sets the listener for the floating action button.
+    @OnClick(R.id.list_of_books_fab_button)
+    public void addFloatingActionButtonClick() {
+        ((MainActivity) currentActivity).loadFragment(new AddBook());
+    }
+
+    // searchButtonClick(): Sets the listener for the search buttton.
+    @OnClick(R.id.searchButton)
+    public void searchButtonClick() {
+        ListOfBooks.this.restartLoader();
     }
 
     /** CURSOR METHODS _________________________________________________________________________ **/

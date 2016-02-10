@@ -41,7 +41,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     private static final int SCAN_BARCODE_RESULTS = 1337;
     private final int LOADER_ID = 1;
     private static final String SCAN_RESULTS = "SCAN_RESULTS";
-    private final String EAN_CONTENT="eanContent";
+    private final String EAN_CONTENT = "eanContent";
     private View rootView;
 
     // VIEW INJECTION VARIABLES
@@ -57,6 +57,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
 
     /** INITIALIZATION METHODS _________________________________________________________________ **/
 
+    // AddBook(): Default constructor for this fragment class.
     public AddBook() {}
 
     /** FRAGMENT LIFECYCLE METHODS _____________________________________________________________ **/
@@ -64,7 +65,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        activity.setTitle(R.string.scan);
+        activity.setTitle(R.string.drawer_add_book);
     }
 
     @Override
@@ -108,7 +109,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if(ean!=null) {
+        if (ean != null) {
             outState.putString(EAN_CONTENT, ean.getText().toString());
         }
     }
@@ -223,8 +224,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
 
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), ScannerActivity.class);
-                startActivityForResult(i, SCAN_BARCODE_RESULTS);
+                launchScanIntent(); // Launches an intent to start the ScannerActivity.
             }
         });
 
@@ -263,6 +263,14 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
         bookIntent.setAction(BookService.FETCH_BOOK);
         getActivity().startService(bookIntent);
         AddBook.this.restartLoader();
+    }
+
+    /** INTENT METHODS _________________________________________________________________________ **/
+
+    // launchScanIntent(): Launches an intent to start the ScannerActivity.
+    private void launchScanIntent() {
+        Intent i = new Intent(getActivity(), ScannerActivity.class);
+        startActivityForResult(i, SCAN_BARCODE_RESULTS);
     }
 
     /** SUBCLASSES _____________________________________________________________________________ **/

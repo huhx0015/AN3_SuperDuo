@@ -32,7 +32,8 @@ import it.jaschke.alexandria.api.Callback;
  *  -----------------------------------------------------------------------------------------------
  */
 
-public class MainActivity extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks, Callback {
+public class MainActivity extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks,
+        Callback {
 
     /** CLASS VARIABLES ________________________________________________________________________ **/
 
@@ -53,6 +54,8 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // If this device is a tablet, a layout specific to tablets is set instead.
         IS_TABLET = isTablet();
         if (IS_TABLET){
             setContentView(R.layout.activity_main_tablet);
@@ -121,28 +124,24 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment nextFragment;
-
         switch (position){
             default:
+
+            // LIST OF BOOKS:
             case 0:
-                nextFragment = new ListOfBooks();
+                loadFragment(new ListOfBooks());
                 break;
+
+            // ADD BOOK:
             case 1:
-                nextFragment = new AddBook();
+                loadFragment(new AddBook());
                 break;
+
+            // ABOUT:
             case 2:
-                nextFragment = new About();
+                loadFragment(new About());
                 break;
-
         }
-
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, nextFragment)
-                .addToBackStack((String) title)
-                .commit();
     }
 
     @Override
@@ -150,6 +149,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
         int id = item.getItemId();
 
+        // SETTINGS:
         if (id == R.id.action_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
             return true;
@@ -174,6 +174,17 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
     public void setTitle(int titleId) {
         title = getString(titleId);
+    }
+
+    /** FRAGMENT METHODS _______________________________________________________________________ **/
+
+    // loadFragment(): Loads a fragment into the fragment container view.
+    public void loadFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, fragment)
+                .addToBackStack((String) title)
+                .commit();
     }
 
     /** MISCELLANEOUS METHODS __________________________________________________________________ **/
