@@ -10,11 +10,12 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:baselineAligned="false">
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1">
 
@@ -42,7 +43,7 @@
                     android:layout_marginTop="4dp">
 
                     <EditText
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:inputType="number"
                         android:minEms="@integer/ean_width"
@@ -90,9 +91,6 @@
                         android:layout_height="192dp"
                         android:id="@+id/bookCover"
                         android:contentDescription="@string/book_cover"
-                        android:layout_alignTop="@+id/authors"
-                        android:layout_alignLeft="@+id/eancontainer"
-                        android:layout_alignStart="@+id/eancontainer"
                         android:layout_gravity="center"
                         android:scaleType="fitCenter"
                         android:layout_marginTop="4dp" />
@@ -104,9 +102,6 @@
                         android:textSize="@dimen/head_line"
                         android:textIsSelectable="true"
                         android:textStyle="bold"
-                        android:layout_below="@+id/eancontainer"
-                        android:layout_alignLeft="@+id/eancontainer"
-                        android:layout_alignStart="@+id/eancontainer"
                         android:layout_gravity="center_horizontal"
                         android:textColor="@android:color/black"
                         android:layout_marginTop="8dp" />
@@ -116,10 +111,8 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/bookSubTitle"
                         android:layout_marginTop="4dp"
-                        android:layout_below="@+id/bookTitle"
                         android:maxLines="3"
                         android:ellipsize="end"
-                        android:layout_alignLeft="@+id/eancontainer"
                         android:layout_gravity="center_horizontal"
                         android:textColor="@android:color/black" />
 
@@ -129,9 +122,6 @@
                         android:id="@+id/authors"
                         android:gravity="end"
                         android:textSize="@dimen/small_fontsize"
-                        android:layout_below="@+id/bookSubTitle"
-                        android:layout_alignRight="@+id/eancontainer"
-                        android:layout_alignEnd="@+id/eancontainer"
                         android:layout_gravity="center"
                         android:layout_marginTop="4dp"
                         android:textColor="@android:color/black" />
@@ -141,9 +131,6 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/categories"
                         android:textSize="@dimen/small_fontsize"
-                        android:layout_below="@+id/bookCover"
-                        android:layout_alignLeft="@+id/eancontainer"
-                        android:layout_alignStart="@+id/eancontainer"
                         android:layout_gravity="center"
                         android:textColor="@android:color/black"
                         android:layout_marginBottom="8dp" />
@@ -157,8 +144,6 @@
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
             android:id="@+id/right_button_container"
             android:padding="4dp">
 

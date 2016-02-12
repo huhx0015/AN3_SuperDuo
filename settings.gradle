@@ -1,1 +1,1 @@
-include ':football_scores', ':alexandria', ':an3_library', ':Application'
+include ':football_scores', ':alexandria', ':an3_library'
