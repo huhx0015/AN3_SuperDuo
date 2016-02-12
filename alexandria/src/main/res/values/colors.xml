@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="toolbar_light_color">#4DB6AC</color>
-    <color name="toolbar_dark_color">#26A69A</color>
+
+    <!--APP STYLE COLORS-->
+    <color name="background_color">#E3F2FD</color>
+    <color name="primary_color">#42A5F5</color>
+    <color name="primary_dark_color">#2196F3</color>
+    <color name="accent_color">#82B1FF</color>
     <color name="blue_grey_text_color">#607D8B</color>
     <color name="blue_grey_hint_text_color">#B0BEC5</color>
-    <color name="fab_normal_color">#4DB6AC</color>
-    <color name="fab_pressed_color">#26A69A</color>
-    <color name="fab_ripple_color">#26A69A</color>
+
+    <!--FLOATING ACTION BUTTON COLORS-->
+    <color name="fab_normal_color">#2979FF</color>
+    <color name="fab_pressed_color">#448AFF</color>
+    <color name="fab_ripple_color">#82B1FF</color>
 </resources>

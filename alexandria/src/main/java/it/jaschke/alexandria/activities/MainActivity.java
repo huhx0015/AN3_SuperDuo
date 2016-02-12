@@ -22,7 +22,7 @@ import it.jaschke.alexandria.fragments.BookDetail;
 import it.jaschke.alexandria.fragments.ListOfBooks;
 import it.jaschke.alexandria.ui.NavigationDrawerFragment;
 import it.jaschke.alexandria.R;
-import it.jaschke.alexandria.api.Callback;
+import it.jaschke.alexandria.interfaces.Callback;
 
 /** -----------------------------------------------------------------------------------------------
  *  [MainActivity] CLASS
@@ -32,8 +32,7 @@ import it.jaschke.alexandria.api.Callback;
  *  -----------------------------------------------------------------------------------------------
  */
 
-public class MainActivity extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks,
-        Callback {
+public class MainActivity extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks, Callback {
 
     /** CLASS VARIABLES ________________________________________________________________________ **/
 

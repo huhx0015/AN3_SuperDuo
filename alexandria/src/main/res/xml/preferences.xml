@@ -3,14 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:tag="PREFERENCE_TAG"
-    >
+    android:tag="PREFERENCE_TAG">
 
-    <ListPreference
-        android:key="pref_startFragment"
-        android:title="@string/pref_startScreen"
-        android:entries="@array/pref_start_options"
-        android:entryValues="@array/pref_start_values"
-        />
+    <PreferenceCategory
+        android:title="DEFAULT START SCREEN"
+        android:key="alexandria_default_start_screen">
+        <ListPreference
+            android:key="pref_startFragment"
+            android:title="@string/pref_startScreen"
+            android:entries="@array/pref_start_options"
+            android:entryValues="@array/pref_start_values" />
+    </PreferenceCategory>
 
 </PreferenceScreen>

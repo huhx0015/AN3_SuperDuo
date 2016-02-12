@@ -13,6 +13,7 @@ import it.jaschke.alexandria.R;
 /** -----------------------------------------------------------------------------------------------
  *  [About] CLASS
  *  ORIGINAL DEVELOPER: Sascha Jaschke
+ *  MODIFIED BY: Michael Yoon Huh (HUHX0015)
  *  -----------------------------------------------------------------------------------------------
  */
 
@@ -29,6 +30,8 @@ public class About extends Fragment {
 
     /** FRAGMENT LIFECYCLE METHODS _____________________________________________________________ **/
 
+    // onAttach(): The initial function that is called when the Fragment is run. The activity is
+    // attached to the fragment.
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -36,6 +39,7 @@ public class About extends Fragment {
         activity.setTitle(R.string.drawer_about);
     }
 
+    // onCreateView(): Creates and returns the view hierarchy associated with the fragment.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         aboutFragmentView = inflater.inflate(R.layout.fragment_about, container, false);

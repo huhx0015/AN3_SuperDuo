@@ -22,6 +22,7 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import it.jaschke.alexandria.R;
+import it.jaschke.alexandria.activities.MainActivity;
 import it.jaschke.alexandria.activities.ScannerActivity;
 import it.jaschke.alexandria.data.AlexandriaContract;
 import it.jaschke.alexandria.network.NetworkConnectivity;
@@ -64,12 +65,15 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
 
     /** FRAGMENT LIFECYCLE METHODS _____________________________________________________________ **/
 
+    // onAttach(): The initial function that is called when the Fragment is run. The activity is
+    // attached to the fragment.
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         activity.setTitle(R.string.drawer_add_book);
     }
 
+    // onCreateView(): Creates and returns the view hierarchy associated with the fragment.
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -86,6 +90,8 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
         return rootView;
     }
 
+    // onDestroyView(): This function runs when the screen is no longer visible and the view is
+    // destroyed.
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -211,7 +217,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
 
             @Override
             public void onClick(View view) {
-
+                isbnField.setText("");
             }
         });
 
@@ -278,10 +284,17 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
 
         // Sets the visibility of the View objects in this layout.
         bookContainer.setVisibility(View.INVISIBLE);
-        saveButton.setVisibility(View.GONE);
-        deleteButton.setVisibility(View.GONE);
         scanButton.setVisibility(View.VISIBLE);
+
+        if (MainActivity.IS_TABLET) {
+            saveButton.setVisibility(View.INVISIBLE);
+            deleteButton.setVisibility(View.INVISIBLE);
+        } else {
+            saveButton.setVisibility(View.GONE);
+            deleteButton.setVisibility(View.GONE);
+        }
     }
+
 
     // retrieveBookData(): Retrieves the data on the book associated with the ISBN code.
     private void retrieveBookData(String isbnCode) {

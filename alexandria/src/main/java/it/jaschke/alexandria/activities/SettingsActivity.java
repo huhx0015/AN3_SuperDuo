@@ -2,6 +2,11 @@ package it.jaschke.alexandria.activities;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.LinearLayout;
+
 import it.jaschke.alexandria.R;
 
 /** -----------------------------------------------------------------------------------------------
@@ -18,6 +23,15 @@ public class SettingsActivity extends PreferenceActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.setContentView(R.layout.activity_settings);
         addPreferencesFromResource(R.xml.preferences);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.activity_settings_toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 }

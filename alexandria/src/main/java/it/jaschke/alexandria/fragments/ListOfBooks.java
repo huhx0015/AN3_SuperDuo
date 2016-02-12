@@ -20,8 +20,15 @@ import butterknife.OnClick;
 import it.jaschke.alexandria.R;
 import it.jaschke.alexandria.activities.MainActivity;
 import it.jaschke.alexandria.api.BookListAdapter;
-import it.jaschke.alexandria.api.Callback;
+import it.jaschke.alexandria.interfaces.Callback;
 import it.jaschke.alexandria.data.AlexandriaContract;
+
+/** -----------------------------------------------------------------------------------------------
+ *  [BookDetail] CLASS
+ *  ORIGINAL DEVELOPER: Sascha Jaschke
+ *  MODIFIED BY: Michael Yoon Huh (HUHX0015)
+ *  -----------------------------------------------------------------------------------------------
+ */
 
 public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -44,12 +51,15 @@ public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbac
 
     /** FRAGMENT LIFECYCLE METHODS _____________________________________________________________ **/
 
+    // onAttach(): The initial function that is called when the Fragment is run. The activity is
+    // attached to the fragment.
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         currentActivity = activity;
     }
 
+    // onCreateView(): Creates and returns the view hierarchy associated with the fragment.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -65,24 +75,13 @@ public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbac
 
         View rootView = inflater.inflate(R.layout.fragment_list_of_books, container, false);
         ButterKnife.bind(this, rootView);
-
-        bookList.setAdapter(bookListAdapter);
-
-        bookList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Cursor cursor = bookListAdapter.getCursor();
-                if (cursor != null && cursor.moveToPosition(position)) {
-                    ((Callback) getActivity())
-                            .onItemSelected(cursor.getString(cursor.getColumnIndex(AlexandriaContract.BookEntry._ID)));
-                }
-            }
-        });
+        initListView(); // Initializes the ListView.
 
         return rootView;
     }
 
+    // onDestroyView(): This function runs when the screen is no longer visible and the view is
+    // destroyed.
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -97,10 +96,26 @@ public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbac
         ((MainActivity) currentActivity).loadFragment(new AddBook());
     }
 
-    // searchButtonClick(): Sets the listener for the search buttton.
+    // searchButtonClick(): Sets the listener for the search button.
     @OnClick(R.id.searchButton)
     public void searchButtonClick() {
         ListOfBooks.this.restartLoader();
+    }
+
+    // initListView(): Initializes the ListView for this fragment.
+    private void initListView() {
+        bookList.setAdapter(bookListAdapter);
+        bookList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Cursor cursor = bookListAdapter.getCursor();
+                if (cursor != null && cursor.moveToPosition(position)) {
+                    ((Callback) getActivity())
+                            .onItemSelected(cursor.getString(cursor.getColumnIndex(AlexandriaContract.BookEntry._ID)));
+                }
+            }
+        });
     }
 
     /** CURSOR METHODS _________________________________________________________________________ **/

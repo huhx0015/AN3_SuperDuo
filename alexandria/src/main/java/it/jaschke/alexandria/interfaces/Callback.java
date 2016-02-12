@@ -1,4 +1,4 @@
-package it.jaschke.alexandria.api;
+package it.jaschke.alexandria.interfaces;
 
 /** -----------------------------------------------------------------------------------------------
  *  [Callback] CLASS
