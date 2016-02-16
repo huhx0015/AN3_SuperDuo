@@ -180,6 +180,10 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     // loadFragment(): Loads a fragment into the fragment container view.
     public void loadFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
+        if (fragmentManager.getFragments() != null) {
+            fragmentManager.popBackStack(); // Pops the fragment from the stack.
+        }
+
         fragmentManager.beginTransaction()
                 .replace(R.id.container, fragment)
                 .addToBackStack((String) title)
