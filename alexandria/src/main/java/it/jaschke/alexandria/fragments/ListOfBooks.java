@@ -71,6 +71,7 @@ public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbac
                 null  // sort order
         );
         bookListAdapter = new BookListAdapter(getActivity(), cursor, 0);
+        if (cursor != null) { cursor.close(); } // Frees up the cursor.
 
         View rootView = inflater.inflate(R.layout.fragment_list_of_books, container, false);
         ButterKnife.bind(this, rootView);

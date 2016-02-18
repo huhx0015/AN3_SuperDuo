@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 /** -----------------------------------------------------------------------------------------------
@@ -75,7 +76,7 @@ public class BookProvider extends ContentProvider {
     }
 
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+    public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         Cursor retCursor;
         switch (uriMatcher.match(uri)) {
             case BOOK:
@@ -182,7 +183,9 @@ public class BookProvider extends ContentProvider {
 
         // Null pointer exception handling.
         try {
-            retCursor.setNotificationUri(getContext().getContentResolver(), uri);
+            if (getContext() != null) {
+                retCursor.setNotificationUri(getContext().getContentResolver(), uri);
+            }
         }
         catch (NullPointerException e) {
             Log.e(LOG_TAG, "ERROR: Content resolver was null.");
@@ -194,7 +197,7 @@ public class BookProvider extends ContentProvider {
 
 
     @Override
-    public String getType(Uri uri) {
+    public String getType(@NonNull Uri uri) {
         final int match = uriMatcher.match(uri);
 
         switch (match) {
@@ -218,7 +221,7 @@ public class BookProvider extends ContentProvider {
     }
 
     @Override
-    public Uri insert(Uri uri, ContentValues values) {
+    public Uri insert(@NonNull Uri uri, ContentValues values) {
         final SQLiteDatabase db = dbHelper.getWritableDatabase();
         final int match = uriMatcher.match(uri);
         Uri returnUri;
@@ -232,9 +235,10 @@ public class BookProvider extends ContentProvider {
                 }
 
                 // Null pointer exception handling.
-                ContentResolver contentResolver;
                 try {
-                    getContext().getContentResolver().notifyChange(AlexandriaContract.BookEntry.buildFullBookUri(_id), null);
+                    if (getContext() != null) {
+                        getContext().getContentResolver().notifyChange(AlexandriaContract.BookEntry.buildFullBookUri(_id), null);
+                    }
                 }
                 catch (NullPointerException e) {
                     Log.e(LOG_TAG, "ERROR: Content resolver was null.");
@@ -264,7 +268,7 @@ public class BookProvider extends ContentProvider {
     }
 
     @Override
-    public int delete(Uri uri, String selection, String[] selectionArgs) {
+    public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {
         final SQLiteDatabase db = dbHelper.getWritableDatabase();
         final int match = uriMatcher.match(uri);
         int rowsDeleted;
@@ -295,7 +299,9 @@ public class BookProvider extends ContentProvider {
 
             // Null pointer exception handling.
             try {
-                getContext().getContentResolver().notifyChange(uri, null);
+                if (getContext() != null) {
+                    getContext().getContentResolver().notifyChange(uri, null);
+                }
             }
             catch (NullPointerException e) {
                 Log.e(LOG_TAG, "ERROR: Content resolver was null.");
@@ -305,7 +311,7 @@ public class BookProvider extends ContentProvider {
     }
 
     @Override
-    public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+    public int update(@NonNull Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         final SQLiteDatabase db = dbHelper.getWritableDatabase();
         final int match = uriMatcher.match(uri);
         int rowsUpdated;
@@ -330,7 +336,9 @@ public class BookProvider extends ContentProvider {
 
             // Null pointer exception handling.
             try {
-                getContext().getContentResolver().notifyChange(uri, null);
+                if (getContext() != null) {
+                    getContext().getContentResolver().notifyChange(uri, null);
+                }
             }
             catch (NullPointerException e) {
                 Log.e(LOG_TAG, "ERROR: Content resolver was null.");

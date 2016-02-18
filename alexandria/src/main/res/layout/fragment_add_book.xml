@@ -138,12 +138,12 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/next_button"
+            android:text="@string/cancel_button"
             android:layout_weight="1"
-            android:id="@+id/save_button"
-            android:drawableLeft="@drawable/ic_action_accept"
-            android:typeface="sans"
+            android:id="@+id/delete_button"
+            android:drawableLeft="@drawable/ic_action_discard"
             android:textSize="14sp"
+            android:typeface="sans"
             android:visibility="gone" />
 
         <Button
@@ -160,12 +160,12 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/cancel_button"
+            android:text="@string/next_button"
             android:layout_weight="1"
-            android:id="@+id/delete_button"
-            android:drawableLeft="@drawable/ic_action_discard"
-            android:textSize="14sp"
+            android:id="@+id/save_button"
+            android:drawableLeft="@drawable/ic_action_accept"
             android:typeface="sans"
+            android:textSize="14sp"
             android:visibility="gone" />
 
     </LinearLayout>

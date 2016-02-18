@@ -17,7 +17,7 @@
     <string name="input_hint">Insert ISBN-13. Digits only.</string>
     <string name="book_cover">Bookcover</string>
 
-    <!--ADD BOOK-->
+    <!--ADD BOOK STRINGS-->
     <string name="scan_button">Scan</string>
     <string name="next_button">Next</string>
     <string name="cancel_button">Cancel</string>
@@ -32,4 +32,7 @@
     <string name="share_text">A must read book: </string>
 
     <string name="about_text">This application gets book information from a Google API. All titles, cover images, and author information come from there.\n\nThe original version of this app was built by Sascha Jaschke, and a modified version is given to students in the Udacity Android Nanodegree program. </string>
+
+    <!--CONTENT DESCRIPTION STRINGS-->
+    <string name="about_image_description">Alexandria Logo</string>
 </resources>

@@ -35,11 +35,6 @@
                 android:value="barqsoft.footballscores.activities.MainActivity" />
         </activity>
 
-        <activity
-            android:name=".replacement.FSMainActivity"
-            android:label="@string/app_name" >
-        </activity>
-
         <service android:name=".service.ScoresFetchService" />
 
         <service android:name=".widget.ScoresWidgetService"></service>

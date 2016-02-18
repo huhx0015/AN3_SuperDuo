@@ -13,7 +13,7 @@ import java.io.InputStream;
  *  -----------------------------------------------------------------------------------------------
  */
 public class DownloadImage extends AsyncTask<String, Void, Bitmap> {
-    ImageView bmImage;
+    private ImageView bmImage;
 
     public DownloadImage(ImageView bmImage) {
         this.bmImage = bmImage;

@@ -33,4 +33,7 @@
 
     <!-- CONTENT DESCRIPTION STRINGS -->
     <string name="share_button_description">Share this game\'s details with other applications.</string>
+    <string name="about_image_description">Football Scores Logo</string>
+    <string name="scores_list_home_crest_description">Home Team Crest</string>
+    <string name="scores_list_away_crest_description">Away Team Crest</string>
 </resources>
