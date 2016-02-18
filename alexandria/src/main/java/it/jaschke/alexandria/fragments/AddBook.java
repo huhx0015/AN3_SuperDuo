@@ -286,10 +286,14 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
         bookContainer.setVisibility(View.INVISIBLE);
         scanButton.setVisibility(View.VISIBLE);
 
+        // TABLET:
         if (MainActivity.IS_TABLET) {
             saveButton.setVisibility(View.INVISIBLE);
             deleteButton.setVisibility(View.INVISIBLE);
-        } else {
+        }
+
+        // PHONE:
+        else {
             saveButton.setVisibility(View.GONE);
             deleteButton.setVisibility(View.GONE);
         }

@@ -142,7 +142,6 @@
             android:layout_weight="1"
             android:id="@+id/save_button"
             android:drawableLeft="@drawable/ic_action_accept"
-            android:layout_gravity="bottom"
             android:typeface="sans"
             android:textSize="14sp"
             android:visibility="gone" />
@@ -153,10 +152,9 @@
             android:text="@string/scan_button"
             android:id="@+id/scan_button"
             android:layout_gravity="center"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:gravity="center"
             android:layout_weight="1"
-            android:drawableLeft="@android:drawable/ic_menu_add"
             android:typeface="sans" />
 
         <Button
