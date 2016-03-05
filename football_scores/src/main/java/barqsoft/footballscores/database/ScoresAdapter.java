@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
 import barqsoft.footballscores.R;
 import barqsoft.footballscores.service.ScoresFetchService;
 import barqsoft.footballscores.ui.ViewHolder;
@@ -91,7 +90,8 @@ public class ScoresAdapter extends CursorAdapter {
 
                 @Override
                 public void onClick(View v) {
-                    //add Share Action
+
+                    // Add Share Action
                     context.startActivity(createShareForecastIntent(mHolder.home_name.getText()+" "
                             +mHolder.score.getText()+" "+mHolder.away_name.getText() + " "));
                 }

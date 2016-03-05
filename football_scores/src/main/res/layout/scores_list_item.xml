@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:elevation="4dp">
+    android:elevation="4dp"
+    android:id="@+id/scores_list_item_layout">
 
     <android.support.v7.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -15,20 +17,23 @@
         card_view:cardUseCompatPadding="true"
         android:elevation="8dp"
         android:padding="8dp"
-        android:id="@+id/book_list_item_cardview_container">
+        android:id="@+id/match_list_item_cardview_container"
+        tools:targetApi="honeycomb">
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:baselineAligned="false">
+            android:baselineAligned="false"
+            android:id="@+id/match_container">
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:id="@+id/home_team_container">
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -50,7 +55,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:id="@+id/game_score_container">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
@@ -74,11 +80,13 @@
                     android:typeface="sans" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:id="@+id/away_team_container">
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

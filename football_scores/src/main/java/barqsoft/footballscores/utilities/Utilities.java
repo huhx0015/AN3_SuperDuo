@@ -36,15 +36,10 @@ public class Utilities {
     public static String getMatchDay(int match_day,int league_num) {
 
         if (league_num == CHAMPIONS_LEAGUE) {
-
             if (match_day <= 6) { return "Group Stages, Matchday : 6"; }
-
             else if (match_day == 7 || match_day == 8) { return "First Knockout round"; }
-
             else if(match_day == 9 || match_day == 10) { return "QuarterFinal"; }
-
             else if(match_day == 11 || match_day == 12) { return "SemiFinal"; }
-
             else { return "Final"; }
         }
 
@@ -54,7 +49,6 @@ public class Utilities {
     public static String getScores(int home_goals,int awaygoals) {
 
         if (home_goals < 0 || awaygoals < 0) { return " - "; }
-
         else { return String.valueOf(home_goals) + " - " + String.valueOf(awaygoals); }
     }
 

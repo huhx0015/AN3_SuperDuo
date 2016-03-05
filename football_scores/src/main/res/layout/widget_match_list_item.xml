@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:id="@+id/match_list_widget_item_container">
+
+    <TextView
+        android:id="@+id/match_list_widget_home_team_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="@android:color/black"
+        android:layout_margin="@dimen/widget_margin" />
+
+    <TextView
+        android:id="@+id/match_list_widget_score_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/widget_margin"
+        android:textColor="@android:color/black" />
+
+    <TextView
+        android:id="@+id/match_list_widget_away_team_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="@dimen/widget_margin"
+        android:textColor="@android:color/black" />
+
+    <TextView
+        android:id="@+id/match_list_widget_date_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_below="@+id/match_list_widget_home_team_text"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/widget_margin"
+        android:textColor="@android:color/black" />
+</RelativeLayout>

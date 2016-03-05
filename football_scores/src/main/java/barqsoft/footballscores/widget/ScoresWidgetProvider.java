@@ -1,12 +1,16 @@
 package barqsoft.footballscores.widget;
 
-import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
+import android.net.Uri;
+import android.os.Build;
+import android.widget.RemoteViews;
+import barqsoft.footballscores.R;
+import barqsoft.footballscores.activities.MainActivity;
 
 /** -----------------------------------------------------------------------------------------------
  *  [ScoresWidgetProvider] CLASS
@@ -16,72 +20,32 @@ import android.util.Log;
 
 public class ScoresWidgetProvider extends AppWidgetProvider {
 
-    private static final String ACTION_CLICK = "ACTION_CLICK";
+    /** WIDGET METHODS _________________________________________________________________________ **/
 
-    private static final String LOG_TAG = ScoresWidgetProvider.class.getSimpleName();
-
-    private final int api_level = android.os.Build.VERSION.SDK_INT; // Used to determine the device's Android API version.
-
-    // Example: http://www.vogella.com/tutorials/AndroidWidgets/article.html
-    @SuppressLint("NewApi")
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     @Override
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager,
-                         int[] appWidgetIds) {
+    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 
-        Log.w(LOG_TAG, "onUpdate method called");
-        // Get all ids
-        ComponentName thisWidget = new ComponentName(context,
-                ScoresWidgetProvider.class);
-        int[] allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
+        // Loops through the array of widget IDs for the matching widget ID.
+        for (int widgetId : appWidgetIds) {
 
-        // Build the intent to call the service
-        Intent intent = new Intent(context.getApplicationContext(),
-                ScoresWidgetService.class);
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, allWidgetIds);
+            // Sets the layout for the widget.
+            RemoteViews scoresRemoteView = new RemoteViews(context.getPackageName(), R.layout.widget_match_list);
 
-        // Update the widgets via the service
-        context.startService(intent);
-    }
+            // Sets the service intent.
+            Intent scoresWidgetServiceIntent = new Intent(context, ScoresWidgetService.class);
+            scoresWidgetServiceIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
+            scoresWidgetServiceIntent.setData(Uri.parse(scoresWidgetServiceIntent.toUri(Intent.URI_INTENT_SCHEME)));
+            scoresRemoteView.setRemoteAdapter(R.id.match_list_widget_collection_listview, scoresWidgetServiceIntent);
 
-    /* TODO: Old non-service method.
-    @Override
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager,
-                         int[] appWidgetIds) {
-
-        // Get all ids
-        ComponentName thisWidget = new ComponentName(context,
-                ScoresWidgetProvider.class);
-        int[] allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
-        for (int widgetId : allWidgetIds) {
-            // create some random data
-            int number = (new Random().nextInt(100));
-
-            RemoteViews remoteViews = new RemoteViews(context.getPackageName(),
-                    R.layout.widget_scores);
-            Log.w("WidgetExample", String.valueOf(number));
-            // Set the text
-            remoteViews.setTextViewText(R.id.update, String.valueOf(number));
-
-            // Register an onClickListener
-            Intent intent = new Intent(context, ScoresWidgetProvider.class);
-
-            intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
-
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
-                    0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-            remoteViews.setOnClickPendingIntent(R.id.update, pendingIntent);
-            appWidgetManager.updateAppWidget(widgetId, remoteViews);
-
-            // TODO: Lock screen widget support.
-            if (api_level > 16) {
-
-                Bundle options = appWidgetManager.getAppWidgetOptions(widgetId);
-
-                int category = options.getInt(AppWidgetManager.OPTION_APPWIDGET_HOST_CATEGORY, -1);
-                boolean isLockScreen = category == AppWidgetProviderInfo.WIDGET_CATEGORY_KEYGUARD;
-            }
+            // Sets the widget intent.
+            Intent scoresWidgetIntent = new Intent(context, MainActivity.class);
+            scoresWidgetIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, scoresWidgetIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            scoresRemoteView.setPendingIntentTemplate(R.id.match_list_widget_collection_listview, pendingIntent);
+            appWidgetManager.updateAppWidget(widgetId, scoresRemoteView);
         }
+
+        super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
-    */
 }
