@@ -57,7 +57,7 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/football_widget"/>
+                android:resource="@xml/football_scores_widget"/>
         </receiver>
 
     </application>

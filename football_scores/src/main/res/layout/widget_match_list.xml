@@ -6,7 +6,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#bbFFECC0"
+        android:background="#BBFFECC0"
         android:orientation="vertical"
         android:id="@+id/match_list_widget_layout_container">
 
@@ -14,7 +14,7 @@
             android:id="@+id/match_list_widget_header_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#aaFFA726"
+            android:background="#AAFFA726"
             android:orientation="horizontal"
             android:paddingLeft="8dp"
             android:paddingStart="8dp"

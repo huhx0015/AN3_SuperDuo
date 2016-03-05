@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+import it.jaschke.alexandria.constants.AlexandriaConstants;
 import it.jaschke.alexandria.fragments.About;
 import it.jaschke.alexandria.fragments.AddBook;
 import it.jaschke.alexandria.fragments.BookDetail;
@@ -28,7 +29,7 @@ import it.jaschke.alexandria.interfaces.Callback;
  *  [MainActivity] CLASS
  *  ORIGINAL DEVELOPER: Sascha Jaschke
  *  MODIFIED BY: Michael Yoon Huh (HUHX0015)
- *  DESCRIPTION: MainActivity is the main, default Activity class for this application.
+ *  DESCRIPTION: MainActivity is the main default Activity class for this application.
  *  -----------------------------------------------------------------------------------------------
  */
 
@@ -37,7 +38,10 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     /** CLASS VARIABLES ________________________________________________________________________ **/
 
     // BROADCAST RECEIVER VARIABLES
-    private BroadcastReceiver messageReciever;
+    private BroadcastReceiver messageReceiver;
+
+    // FRAGMENT VARIABLES
+    private String currentFragment = AlexandriaConstants.LIST_OF_BOOKS_FRAGMENT;
 
     // SYSTEM VARIABLES
     public static boolean IS_TABLET = false;
@@ -62,9 +66,9 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
             setContentView(R.layout.activity_main);
         }
 
-        messageReciever = new MessageReciever();
+        messageReceiver = new MessageReciever();
         IntentFilter filter = new IntentFilter(MESSAGE_EVENT);
-        LocalBroadcastManager.getInstance(this).registerReceiver(messageReciever,filter);
+        LocalBroadcastManager.getInstance(this).registerReceiver(messageReceiver,filter);
 
         navigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         title = getTitle();
@@ -75,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
     @Override
     protected void onDestroy() {
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(messageReciever);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(messageReceiver);
         super.onDestroy();
     }
 
@@ -84,9 +88,10 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     @Override
     public void onBackPressed() {
 
-        if (getSupportFragmentManager().getBackStackEntryCount() < 1) {
+        if (currentFragment.equals(AlexandriaConstants.LIST_OF_BOOKS_FRAGMENT)) {
             finish();
         } else {
+            currentFragment = AlexandriaConstants.LIST_OF_BOOKS_FRAGMENT;
             loadFragment(new ListOfBooks());
         }
     }
@@ -117,8 +122,10 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
         getSupportFragmentManager().beginTransaction()
                 .replace(id, fragment)
-                .addToBackStack("Book Detail")
+                .addToBackStack(AlexandriaConstants.BOOK_DETAIL_FRAGMENT)
                 .commit();
+
+        currentFragment = AlexandriaConstants.BOOK_DETAIL_FRAGMENT;
     }
 
     @Override
@@ -128,16 +135,19 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
             // LIST OF BOOKS:
             case 0:
+                currentFragment = AlexandriaConstants.LIST_OF_BOOKS_FRAGMENT;
                 loadFragment(new ListOfBooks());
                 break;
 
             // ADD BOOK:
             case 1:
+                currentFragment = AlexandriaConstants.ADD_BOOK_FRAGMENT;
                 loadFragment(new AddBook());
                 break;
 
             // ABOUT:
             case 2:
+                currentFragment = AlexandriaConstants.ABOUT_FRAGMENT;
                 loadFragment(new About());
                 break;
         }
@@ -193,6 +203,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     /** MISCELLANEOUS METHODS __________________________________________________________________ **/
 
     public void goBack(View view) {
+        currentFragment = AlexandriaConstants.LIST_OF_BOOKS_FRAGMENT;
         loadFragment(new ListOfBooks());
     }
 

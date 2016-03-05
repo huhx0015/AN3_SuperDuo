@@ -325,7 +325,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
 
         /** SUBCLASS VARIABLES _________________________________________________________________ **/
 
-        Boolean isConnected = false; // Used to determine if the device has Internet connectivity.
+        boolean isConnected = false; // Used to determine if the device has Internet connectivity.
         String isbnCode; // References the ISBN string code.
 
         /** ASYNCTASK METHODS __________________________________________________________________ **/

@@ -48,7 +48,6 @@ public class BookProvider extends ContentProvider {
                 " LEFT OUTER JOIN " +  AlexandriaContract.CategoryEntry.TABLE_NAME + " USING (" +AlexandriaContract.BookEntry._ID + ")");
     }
 
-
     private static UriMatcher buildUriMatcher() {
 
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -80,7 +79,7 @@ public class BookProvider extends ContentProvider {
         Cursor retCursor;
         switch (uriMatcher.match(uri)) {
             case BOOK:
-                retCursor=dbHelper.getReadableDatabase().query(
+                retCursor = dbHelper.getReadableDatabase().query(
                         AlexandriaContract.BookEntry.TABLE_NAME,
                         projection,
                         selection,
@@ -91,7 +90,7 @@ public class BookProvider extends ContentProvider {
                 );
                 break;
             case AUTHOR:
-                retCursor=dbHelper.getReadableDatabase().query(
+                retCursor = dbHelper.getReadableDatabase().query(
                         AlexandriaContract.AuthorEntry.TABLE_NAME,
                         projection,
                         selection,
@@ -102,7 +101,7 @@ public class BookProvider extends ContentProvider {
                 );
                 break;
             case CATEGORY:
-                retCursor=dbHelper.getReadableDatabase().query(
+                retCursor = dbHelper.getReadableDatabase().query(
                         AlexandriaContract.CategoryEntry.TABLE_NAME,
                         projection,
                         selection,
@@ -113,7 +112,7 @@ public class BookProvider extends ContentProvider {
                 );
                 break;
             case BOOK_ID:
-                retCursor=dbHelper.getReadableDatabase().query(
+                retCursor = dbHelper.getReadableDatabase().query(
                         AlexandriaContract.BookEntry.TABLE_NAME,
                         projection,
                         AlexandriaContract.BookEntry._ID + " = '" + ContentUris.parseId(uri) + "'",
@@ -124,7 +123,7 @@ public class BookProvider extends ContentProvider {
                 );
                 break;
             case AUTHOR_ID:
-                retCursor=dbHelper.getReadableDatabase().query(
+                retCursor = dbHelper.getReadableDatabase().query(
                         AlexandriaContract.AuthorEntry.TABLE_NAME,
                         projection,
                         AlexandriaContract.AuthorEntry._ID + " = '" + ContentUris.parseId(uri) + "'",
@@ -135,7 +134,7 @@ public class BookProvider extends ContentProvider {
                 );
                 break;
             case CATEGORY_ID:
-                retCursor=dbHelper.getReadableDatabase().query(
+                retCursor = dbHelper.getReadableDatabase().query(
                         AlexandriaContract.CategoryEntry.TABLE_NAME,
                         projection,
                         AlexandriaContract.CategoryEntry._ID + " = '" + ContentUris.parseId(uri) + "'",
@@ -146,7 +145,7 @@ public class BookProvider extends ContentProvider {
                 );
                 break;
             case BOOK_FULLDETAIL:
-                String[] bfd_projection ={
+                String[] bfd_projection = {
                     AlexandriaContract.BookEntry.TABLE_NAME + "." + AlexandriaContract.BookEntry.TITLE,
                     AlexandriaContract.BookEntry.TABLE_NAME + "." + AlexandriaContract.BookEntry.SUBTITLE,
                     AlexandriaContract.BookEntry.TABLE_NAME + "." + AlexandriaContract.BookEntry.IMAGE_URL,

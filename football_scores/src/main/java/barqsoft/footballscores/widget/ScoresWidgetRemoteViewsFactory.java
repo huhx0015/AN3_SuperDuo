@@ -128,10 +128,10 @@ public class ScoresWidgetRemoteViewsFactory implements RemoteViewsService.Remote
 
     // setRemoteView(): Sets the string values for the TextViews in the remote view widget layout.
     private RemoteViews setRemoteView(RemoteViews remoteView, String date, String homeTeam, String awayTeam, String score) {
-            remoteView.setTextViewText(R.id.match_list_widget_date_text, date);
-            remoteView.setTextViewText(R.id.match_list_widget_home_team_text, homeTeam);
-            remoteView.setTextViewText(R.id.match_list_widget_away_team_text, awayTeam);
-            remoteView.setTextViewText(R.id.match_list_widget_score_text, score);
+        remoteView.setTextViewText(R.id.match_list_widget_date_text, date);
+        remoteView.setTextViewText(R.id.match_list_widget_home_team_text, homeTeam);
+        remoteView.setTextViewText(R.id.match_list_widget_away_team_text, awayTeam);
+        remoteView.setTextViewText(R.id.match_list_widget_score_text, score);
         return remoteView;
     }
 

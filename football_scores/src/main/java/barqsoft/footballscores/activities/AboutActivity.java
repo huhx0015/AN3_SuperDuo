@@ -33,9 +33,9 @@ public class AboutActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
+    /** SUBCLASSES _____________________________________________________________________________ **/
+
+    // PlaceholderFragment: A placeholder fragment containing a simple view.
     public static class PlaceholderFragment extends Fragment {
 
         public PlaceholderFragment() {}

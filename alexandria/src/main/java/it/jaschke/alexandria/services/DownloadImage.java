@@ -13,11 +13,18 @@ import java.io.InputStream;
  *  -----------------------------------------------------------------------------------------------
  */
 public class DownloadImage extends AsyncTask<String, Void, Bitmap> {
+
+    /** CLASS VARIABLES ________________________________________________________________________ **/
+
     private ImageView bmImage;
+
+    /** CONSTRUCTOR METHODS ____________________________________________________________________ **/
 
     public DownloadImage(ImageView bmImage) {
         this.bmImage = bmImage;
     }
+
+    /** DOWNLOAD METHODS _______________________________________________________________________ **/
 
     protected Bitmap doInBackground(String... urls) {
         String urlDisplay = urls[0];

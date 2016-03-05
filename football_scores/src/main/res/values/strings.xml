@@ -51,7 +51,7 @@
     <string name="scores_list_away_crest_description">Away Team Crest</string>
     <string name="widget_icon_description">Football Scores Icon</string>
     <string name="widget_header_description">Football Scores</string>
-    <string name="widget_subheader_description">Today\'s Matches</string>
+    <string name="widget_subheader_description">Matches</string>
     <string name="widget_list_description">Match List</string>
 
 </resources>
