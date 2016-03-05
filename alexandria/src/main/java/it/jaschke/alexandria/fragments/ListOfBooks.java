@@ -11,6 +11,7 @@ import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -71,11 +72,13 @@ public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbac
                 null  // sort order
         );
         bookListAdapter = new BookListAdapter(getActivity(), cursor, 0);
-        if (cursor != null) { cursor.close(); } // Frees up the cursor.
 
         View rootView = inflater.inflate(R.layout.fragment_list_of_books, container, false);
         ButterKnife.bind(this, rootView);
         initListView(); // Initializes the ListView.
+
+        // Hides the soft keyboard on launch.
+        currentActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         return rootView;
     }
@@ -124,7 +127,7 @@ public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbac
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
         final String selection = AlexandriaContract.BookEntry.TITLE +" LIKE ? OR " + AlexandriaContract.BookEntry.SUBTITLE + " LIKE ? ";
-        String searchString =searchText.getText().toString();
+        String searchString = searchText.getText().toString();
 
         if(searchString.length()>0){
             searchString = "%"+searchString+"%";

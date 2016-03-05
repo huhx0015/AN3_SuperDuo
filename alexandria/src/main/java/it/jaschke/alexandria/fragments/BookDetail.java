@@ -129,9 +129,6 @@ public class BookDetail extends Fragment implements LoaderManager.LoaderCallback
         bookIntent.setAction(BookService.DELETE_BOOK);
         getActivity().startService(bookIntent);
 
-        // Pops this fragment off of the stack.
-        getActivity().getSupportFragmentManager().popBackStack();
-
         // Loads the ListOfBooks fragment.
         ((MainActivity) getActivity()).loadFragment(new ListOfBooks());
     }

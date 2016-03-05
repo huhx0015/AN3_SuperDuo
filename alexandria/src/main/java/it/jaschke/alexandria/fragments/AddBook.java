@@ -127,7 +127,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     @Override
     public android.support.v4.content.Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
-        if (isbnField.getText().length()==0){
+        if (isbnField.getText().length() == 0){
             return null;
         }
 
@@ -288,8 +288,8 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
 
         // TABLET:
         if (MainActivity.IS_TABLET) {
-            saveButton.setVisibility(View.INVISIBLE);
-            deleteButton.setVisibility(View.INVISIBLE);
+            saveButton.setVisibility(View.GONE);
+            deleteButton.setVisibility(View.GONE);
         }
 
         // PHONE:

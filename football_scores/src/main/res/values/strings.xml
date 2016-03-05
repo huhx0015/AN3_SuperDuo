@@ -42,7 +42,7 @@
 
     <!--WIDGET STRINGS-->
     <string name="football_scores_widget">Football Scores</string>
-    <string name="football_scores_widget_subheader">Today\'s Matches</string>
+    <string name="football_scores_widget_subheader">Matches</string>
 
     <!-- CONTENT DESCRIPTION STRINGS -->
     <string name="share_button_description">Share this game\'s details with other applications.</string>

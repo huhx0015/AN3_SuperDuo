@@ -66,13 +66,11 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         IntentFilter filter = new IntentFilter(MESSAGE_EVENT);
         LocalBroadcastManager.getInstance(this).registerReceiver(messageReciever,filter);
 
-        navigationDrawerFragment = (NavigationDrawerFragment)
-                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+        navigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         title = getTitle();
 
         // Set up the drawer.
-        navigationDrawerFragment.setUp(R.id.navigation_drawer,
-                    (DrawerLayout) findViewById(R.id.drawer_layout));
+        navigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
     }
 
     @Override
@@ -85,10 +83,12 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
     @Override
     public void onBackPressed() {
-        if (getSupportFragmentManager().getBackStackEntryCount()<2){
+
+        if (getSupportFragmentManager().getBackStackEntryCount() < 1) {
             finish();
+        } else {
+            loadFragment(new ListOfBooks());
         }
-        super.onBackPressed();
     }
 
     @Override
@@ -192,8 +192,8 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
     /** MISCELLANEOUS METHODS __________________________________________________________________ **/
 
-    public void goBack(View view){
-        getSupportFragmentManager().popBackStack();
+    public void goBack(View view) {
+        loadFragment(new ListOfBooks());
     }
 
     private boolean isTablet() {
@@ -208,7 +208,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(intent.getStringExtra(MESSAGE_KEY)!=null){
+            if (intent.getStringExtra(MESSAGE_KEY) != null){
                 Toast.makeText(MainActivity.this, intent.getStringExtra(MESSAGE_KEY), Toast.LENGTH_LONG).show();
             }
         }

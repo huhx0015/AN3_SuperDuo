@@ -10,7 +10,8 @@
         android:baselineAligned="false"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:id="@+id/main_activity_container">
+        android:id="@+id/main_activity_container"
+        android:background="@color/background_color">
 
         <FrameLayout
             android:id="@+id/container"
