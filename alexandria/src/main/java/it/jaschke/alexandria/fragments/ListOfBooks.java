@@ -35,7 +35,7 @@ public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbac
 
     /** CLASS VARIABLES ________________________________________________________________________ **/
 
-    private Activity currentActivity;
+    private MainActivity currentActivity;
     private BookListAdapter bookListAdapter;
     private final int LOADER_ID = 10;
     private int position = ListView.INVALID_POSITION;
@@ -57,7 +57,7 @@ public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbac
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        currentActivity = activity;
+        currentActivity = (MainActivity) activity;
     }
 
     // onCreateView(): Creates and returns the view hierarchy associated with the fragment.
@@ -107,7 +107,9 @@ public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbac
 
     // initListView(): Initializes the ListView for this fragment.
     private void initListView() {
-        bookList.setAdapter(bookListAdapter);
+        bookList.setAdapter(bookListAdapter); // Sets the book list adapter.
+
+        // Sets the click listener for the adapter items.
         bookList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override

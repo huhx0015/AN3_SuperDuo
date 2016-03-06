@@ -207,9 +207,9 @@ public class NavigationDrawerFragment extends Fragment {
                     return;
                 }
 
+                // The user manually opened the drawer; store this flag to prevent auto-showing
+                // the navigation drawer automatically in the future.
                 if (!mUserLearnedDrawer) {
-                    // The user manually opened the drawer; store this flag to prevent auto-showing
-                    // the navigation drawer automatically in the future.
                     mUserLearnedDrawer = true;
                     SharedPreferences sp = PreferenceManager
                             .getDefaultSharedPreferences(getActivity());
@@ -256,8 +256,9 @@ public class NavigationDrawerFragment extends Fragment {
         }
     }
 
-    // NavigationDrawerCallbacks(): Callbacks interface that all activities using this fragment must implement.
-    public static interface NavigationDrawerCallbacks {
+    // NavigationDrawerCallbacks(): Callbacks interface that all activities using this fragment must
+    // implement.
+    public interface NavigationDrawerCallbacks {
 
         // Called when an item in the navigation drawer is selected.
         void onNavigationDrawerItemSelected(int position);

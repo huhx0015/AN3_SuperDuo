@@ -93,6 +93,8 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         } else {
             currentFragment = AlexandriaConstants.LIST_OF_BOOKS_FRAGMENT;
             loadFragment(new ListOfBooks());
+            setTitle(getResources().getString(R.string.app_name));
+            setActionbarName(getResources().getString(R.string.app_name));
         }
     }
 
@@ -181,6 +183,13 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         }
     }
 
+    // setActionbarName(): Sets the text in the action bar.
+    public void setActionbarName(String title) {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(title);
+        }
+    }
+
     public void setTitle(int titleId) {
         title = getString(titleId);
     }
@@ -205,6 +214,8 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     public void goBack(View view) {
         currentFragment = AlexandriaConstants.LIST_OF_BOOKS_FRAGMENT;
         loadFragment(new ListOfBooks());
+        setTitle(getResources().getString(R.string.app_name));
+        setActionbarName(getResources().getString(R.string.app_name));
     }
 
     private boolean isTablet() {

@@ -31,7 +31,8 @@
                 android:layout_marginRight="6dip"
                 android:scaleType="fitCenter"
                 android:contentDescription="@string/book_cover"
-                android:src="@drawable/ic_launcher" />
+                android:src="@drawable/ic_launcher"
+                android:padding="4dp" />
 
             <LinearLayout
                 android:orientation="vertical"

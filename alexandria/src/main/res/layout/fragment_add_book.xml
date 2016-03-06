@@ -142,6 +142,7 @@
             android:layout_weight="1"
             android:id="@+id/delete_button"
             android:drawableLeft="@drawable/ic_action_discard"
+            android:drawableStart="@drawable/ic_action_discard"
             android:textSize="14sp"
             android:typeface="sans"
             android:visibility="gone" />
@@ -164,6 +165,7 @@
             android:layout_weight="1"
             android:id="@+id/save_button"
             android:drawableLeft="@drawable/ic_action_accept"
+            android:drawableStart="@drawable/ic_action_accept"
             android:typeface="sans"
             android:textSize="14sp"
             android:visibility="gone" />
