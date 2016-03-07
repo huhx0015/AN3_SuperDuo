@@ -127,18 +127,14 @@ public class ScoresFetchService extends IntentService {
                 processJSONdata(JSON_data, getApplicationContext(), true);
             }
 
-            else {
-                //Could not Connect
-                Log.d(LOG_TAG, "Could not connect to server.");
-            }
+            else { Log.d(LOG_TAG, "Could not connect to server."); }
         }
 
-        catch(Exception e) { Log.e(LOG_TAG,e.getMessage()); }
+        catch(Exception e) { Log.e(LOG_TAG, e.getMessage()); }
     }
 
     private void processJSONdata (String JSONdata,Context mContext, boolean isReal) {
 
-        //JSON data
         // This set of league codes is for the 2015/2016 season. In fall of 2016, they will need to
         // be updated. Feel free to use the codes
         final String BUNDESLIGA1 = "394";
@@ -152,8 +148,6 @@ public class ScoresFetchService extends IntentService {
         final String PRIMERA_LIGA = "402";
         final String Bundesliga3 = "403";
         final String EREDIVISIE = "404";
-
-
         final String SEASON_LINK = "http://api.football-data.org/alpha/soccerseasons/";
         final String MATCH_LINK = "http://api.football-data.org/alpha/fixtures/";
         final String FIXTURES = "fixtures";
@@ -234,8 +228,7 @@ public class ScoresFetchService extends IntentService {
                     }
 
                     catch (Exception e) {
-                        Log.d(LOG_TAG, "error here!");
-                        Log.e(LOG_TAG,e.getMessage());
+                        Log.d(LOG_TAG, "processJSONdata(): ERROR: " + e.getMessage());
                     }
 
                     Home = match_data.getString(HOME_TEAM);
@@ -253,26 +246,14 @@ public class ScoresFetchService extends IntentService {
                     match_values.put(DatabaseContract.scores_table.AWAY_GOALS_COL,Away_goals);
                     match_values.put(DatabaseContract.scores_table.LEAGUE_COL,League);
                     match_values.put(DatabaseContract.scores_table.MATCH_DAY,match_day);
-                    //log spam
-
-                    //Log.v(LOG_TAG,match_id);
-                    //Log.v(LOG_TAG,mDate);
-                    //Log.v(LOG_TAG,mTime);
-                    //Log.v(LOG_TAG,Home);
-                    //Log.v(LOG_TAG,Away);
-                    //Log.v(LOG_TAG,Home_goals);
-                    //Log.v(LOG_TAG,Away_goals);
 
                     values.add(match_values);
                 }
             }
-            int inserted_data = 0;
             ContentValues[] insert_data = new ContentValues[values.size()];
             values.toArray(insert_data);
-            inserted_data = mContext.getContentResolver().bulkInsert(
+            int inserted_data = mContext.getContentResolver().bulkInsert(
                     DatabaseContract.BASE_CONTENT_URI,insert_data);
-
-            //Log.v(LOG_TAG,"Succesfully Inserted : " + String.valueOf(inserted_data));
         }
         catch (JSONException e) {
             Log.e(LOG_TAG,e.getMessage());

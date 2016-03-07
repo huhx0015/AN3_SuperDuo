@@ -100,7 +100,7 @@ public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbac
     // addFloatingActionButtonClick(): Sets the listener for the floating action button.
     @OnClick(R.id.list_of_books_fab_button)
     public void addFloatingActionButtonClick() {
-        ((MainActivity) currentActivity).loadFragment(new AddBook());
+        currentActivity.loadFragment(new AddBook());
     }
 
     // searchButtonClick(): Sets the listener for the search button.

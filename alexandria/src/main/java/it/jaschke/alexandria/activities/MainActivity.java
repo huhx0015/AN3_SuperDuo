@@ -121,18 +121,33 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         Bundle args = new Bundle();
         args.putString(BookDetail.EAN_KEY, ean);
 
-        BookDetail fragment = new BookDetail();
-        fragment.setArguments(args);
+        BookDetail bookFragment = new BookDetail();
+        bookFragment.setArguments(args);
 
-        int id = R.id.container;
+        // If device is a tablet and in landscape mode, the right container displays the book
+        // details.
+        FragmentManager fragManager = getSupportFragmentManager();
         if (findViewById(R.id.right_container) != null){
-            id = R.id.right_container;
+
+            // Adds the new BookDetail fragment.
+            fragManager.beginTransaction()
+                    .replace(R.id.right_container, bookFragment)
+                    .commit();
+
+            // FIX: Fixes an issue where the ListOfBooks fragment disappears when the new BookDetail
+            // fragment is replaced with an existing fragment.
+            fragManager.beginTransaction()
+                    .replace(R.id.container, new ListOfBooks())
+                    .commit();
         }
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(id, fragment)
-                .addToBackStack(AlexandriaConstants.BOOK_DETAIL_FRAGMENT)
-                .commit();
+        // Replaces the existing fragment with the BookDetail fragment.
+        else {
+            fragManager.beginTransaction()
+                    .replace(R.id.container, bookFragment)
+                    .addToBackStack(AlexandriaConstants.BOOK_DETAIL_FRAGMENT)
+                    .commit();
+        }
 
         currentFragment = AlexandriaConstants.BOOK_DETAIL_FRAGMENT;
     }
