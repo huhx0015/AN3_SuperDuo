@@ -12,6 +12,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,14 +40,18 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
     // BROADCAST RECEIVER VARIABLES
     private BroadcastReceiver messageReceiver;
+    public static final String MESSAGE_EVENT = "MESSAGE_EVENT";
+    public static final String MESSAGE_KEY = "MESSAGE_EXTRA";
+    public static final String SHOW_BOOK_LIST = "SHOW_BOOK_LIST";
 
     // FRAGMENT VARIABLES
     private String currentFragment = AlexandriaConstants.LIST_OF_BOOKS_FRAGMENT;
 
+    // LOGGING VARIABLES
+    private static final String LOG_TAG = MainActivity.class.getSimpleName();
+
     // SYSTEM VARIABLES
     public static boolean IS_TABLET = false;
-    public static final String MESSAGE_EVENT = "MESSAGE_EVENT";
-    public static final String MESSAGE_KEY = "MESSAGE_EXTRA";
 
     // UI VARIABLES
     private CharSequence title; // Used to store the last screen title. For use in {@link #restoreActionBar()}.
@@ -66,9 +71,11 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
             setContentView(R.layout.activity_main);
         }
 
-        messageReceiver = new MessageReciever();
-        IntentFilter filter = new IntentFilter(MESSAGE_EVENT);
-        LocalBroadcastManager.getInstance(this).registerReceiver(messageReceiver,filter);
+        // Registers the BroadcastReceiver for this activity.
+        messageReceiver = new MessageReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(MESSAGE_EVENT);
+        LocalBroadcastManager.getInstance(this).registerReceiver(messageReceiver, filter);
 
         navigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         title = getTitle();
@@ -139,18 +146,21 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
             case 0:
                 currentFragment = AlexandriaConstants.LIST_OF_BOOKS_FRAGMENT;
                 loadFragment(new ListOfBooks());
+                setActionbarName(getString(R.string.app_name));
                 break;
 
             // ADD BOOK:
             case 1:
                 currentFragment = AlexandriaConstants.ADD_BOOK_FRAGMENT;
                 loadFragment(new AddBook());
+                setActionbarName(getString(R.string.drawer_add_book));
                 break;
 
             // ABOUT:
             case 2:
                 currentFragment = AlexandriaConstants.ABOUT_FRAGMENT;
                 loadFragment(new About());
+                setActionbarName(getString(R.string.drawer_about));
                 break;
         }
     }
@@ -187,6 +197,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     public void setActionbarName(String title) {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(title);
+            setTitle(title);
         }
     }
 
@@ -226,12 +237,23 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
     /** SUBCLASSES _____________________________________________________________________________ **/
 
-    private class MessageReciever extends BroadcastReceiver {
+    private class MessageReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
+
+            Log.d(LOG_TAG, "onReceive(): Message received.");
+
+            // Displays a Toast of the message that was sent via Broadcast.
             if (intent.getStringExtra(MESSAGE_KEY) != null){
                 Toast.makeText(MainActivity.this, intent.getStringExtra(MESSAGE_KEY), Toast.LENGTH_LONG).show();
+                Log.d(LOG_TAG, "onReceive(): MESSAGE_KEY event.");
+            }
+
+            // Displays the ListOfBooks fragment.
+            else if (intent.getStringExtra(SHOW_BOOK_LIST) != null) {
+                loadFragment(new ListOfBooks());
+                Log.d(LOG_TAG, "onReceive(): SHOW_BOOK_LIST event.");
             }
         }
     }

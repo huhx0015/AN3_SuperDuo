@@ -130,7 +130,7 @@ public class BookDetail extends Fragment implements LoaderManager.LoaderCallback
         getActivity().startService(bookIntent);
 
         // Loads the ListOfBooks fragment.
-        ((MainActivity) getActivity()).loadFragment(new ListOfBooks());
+//        ((MainActivity) getActivity()).loadFragment(new ListOfBooks());
     }
 
     /** CURSOR METHODS _________________________________________________________________________ **/

@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import it.jaschke.alexandria.R;
 import it.jaschke.alexandria.activities.MainActivity;
-import it.jaschke.alexandria.api.BookListAdapter;
+import it.jaschke.alexandria.adapters.BookListAdapter;
 import it.jaschke.alexandria.interfaces.Callback;
 import it.jaschke.alexandria.data.AlexandriaContract;
 
@@ -35,9 +35,15 @@ public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbac
 
     /** CLASS VARIABLES ________________________________________________________________________ **/
 
+    // ACTIVITY VARIABLES
     private MainActivity currentActivity;
-    private BookListAdapter bookListAdapter;
+
+    // CURSOR VARIABLES
+    private Cursor cursor;
     private final int LOADER_ID = 10;
+
+    // LIST VARIABLES
+    private BookListAdapter bookListAdapter;
     private int position = ListView.INVALID_POSITION;
 
     // VIEW INJECTION VARIABLES
@@ -64,18 +70,12 @@ public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbac
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        Cursor cursor = getActivity().getContentResolver().query(
-                AlexandriaContract.BookEntry.CONTENT_URI,
-                null, // leaving "columns" null just returns all the columns.
-                null, // cols for "where" clause
-                null, // values for "where" clause
-                null  // sort order
-        );
-        bookListAdapter = new BookListAdapter(getActivity(), cursor, 0);
-
         View rootView = inflater.inflate(R.layout.fragment_list_of_books, container, false);
         ButterKnife.bind(this, rootView);
         initListView(); // Initializes the ListView.
+
+        // Sets the action bar name to "Alexandria".
+        currentActivity.setActionbarName(currentActivity.getString(R.string.app_name));
 
         // Hides the soft keyboard on launch.
         currentActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -87,6 +87,10 @@ public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbac
     // destroyed.
     @Override
     public void onDestroyView() {
+
+        // Closes the cursor query.
+        if (cursor != null && !cursor.isClosed()) { cursor.close(); }
+
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
@@ -107,6 +111,16 @@ public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbac
 
     // initListView(): Initializes the ListView for this fragment.
     private void initListView() {
+
+        cursor = getActivity().getContentResolver().query(
+                AlexandriaContract.BookEntry.CONTENT_URI,
+                null, // leaving "columns" null just returns all the columns.
+                null, // cols for "where" clause
+                null, // values for "where" clause
+                null  // sort order
+        );
+
+        bookListAdapter = new BookListAdapter(getActivity(), cursor, 0);
         bookList.setAdapter(bookListAdapter); // Sets the book list adapter.
 
         // Sets the click listener for the adapter items.
@@ -114,6 +128,7 @@ public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbac
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
                 Cursor cursor = bookListAdapter.getCursor();
                 if (cursor != null && cursor.moveToPosition(position)) {
                     ((Callback) getActivity())
@@ -131,7 +146,7 @@ public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbac
         final String selection = AlexandriaContract.BookEntry.TITLE +" LIKE ? OR " + AlexandriaContract.BookEntry.SUBTITLE + " LIKE ? ";
         String searchString = searchText.getText().toString();
 
-        if(searchString.length()>0){
+        if (searchString.length() > 0) {
             searchString = "%"+searchString+"%";
             return new CursorLoader(
                     getActivity(),

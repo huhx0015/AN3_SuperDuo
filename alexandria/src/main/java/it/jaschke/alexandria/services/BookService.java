@@ -32,10 +32,13 @@ public class BookService extends IntentService {
 
     /** CLASS VARIABLES ________________________________________________________________________ **/
 
-    private final String LOG_TAG = BookService.class.getSimpleName();
+    // CONSTANT VARIABLES
     public static final String FETCH_BOOK = "it.jaschke.alexandria.services.action.FETCH_BOOK";
     public static final String DELETE_BOOK = "it.jaschke.alexandria.services.action.DELETE_BOOK";
     public static final String EAN = "it.jaschke.alexandria.services.extra.EAN";
+
+    // LOGGING VARIABLES
+    private final String LOG_TAG = BookService.class.getSimpleName();
 
     /** INITIALIZATION METHODS _________________________________________________________________ **/
 
@@ -64,8 +67,17 @@ public class BookService extends IntentService {
      * parameters.
      */
     private void deleteBook(String ean) {
+
         if (ean != null) {
+
+            Log.d(LOG_TAG, "deleteBook(): Deleting book : " + ean);
+
             getContentResolver().delete(AlexandriaContract.BookEntry.buildBookUri(Long.parseLong(ean)), null, null);
+
+            // Sends a broadcast to signal the MainActivity to display the ListOfBooks fragment.
+            Intent messageIntent = new Intent(MainActivity.MESSAGE_EVENT);
+            messageIntent.putExtra(MainActivity.SHOW_BOOK_LIST, "");
+            LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(messageIntent);
         }
     }
 
@@ -74,6 +86,8 @@ public class BookService extends IntentService {
      * parameters.
      */
     private void fetchBook(String ean) {
+
+        Log.d(LOG_TAG, "deleteBook(): Fetching book : " + ean);
 
         if (ean.length() != 13){
             return;
@@ -151,9 +165,7 @@ public class BookService extends IntentService {
         }
 
         final String ITEMS = "items";
-
         final String VOLUME_INFO = "volumeInfo";
-
         final String TITLE = "title";
         final String SUBTITLE = "subtitle";
         final String AUTHORS = "authors";
