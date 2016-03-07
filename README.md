@@ -11,19 +11,19 @@ To "meet specifications", your app must fulfill all of the criteria listed in th
 
 Criteria:
 
-* Alexandria has barcode scanning functionality.
+- [ ] Alexandria has barcode scanning functionality.
 	
-* The two errors mentioned in the UX review are handled.
+- [ ] The two errors mentioned in the UX review are handled.
 	
-* Football Scores can be displayed in a widget.
+- [ ] Football Scores can be displayed in a widget.
 	
-* Football Scores app has content descriptions for all buttons, images, and text.
+- [ ] Football Scores app has content descriptions for all buttons, images, and text.
 	
-* Football Scores app supports layout mirroring.
+- [ ] Football Scores app supports layout mirroring.
 	
 Required Behavior:
 	
-* App conforms to common standards found in the Android Nanodegree General Project Guidelines
+- [ ] App conforms to common standards found in the Android Nanodegree General Project Guidelines
 	
 Optional Components:
 
@@ -31,10 +31,10 @@ To receive "exceeds specifications", your app must fully implement at least two 
 
 Criteria:
 
-* Alexandria’s barcode scanning functionality does not require the installation of a separate app on first use.
+- [ ] Alexandria’s barcode scanning functionality does not require the installation of a separate app on first use.
 	
-* Extra error cases are found, accounted for, and called out in code comments.
+- [ ] Extra error cases are found, accounted for, and called out in code comments.
 	
-* Football Scores also support a collection widget.
+- [ ] Football Scores also support a collection widget.
 	
-* Strings are all included in the strings.xml file and untranslatable strings have a translatable tag marked to false.
+- [ ] Strings are all included in the strings.xml file and untranslatable strings have a translatable tag marked to false.
