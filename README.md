@@ -3,6 +3,12 @@ AN3_SuperDuo
 
 DEVELOPER: Michael Yoon Huh
 
+Alexandria:
+![alexandria](https://cloud.githubusercontent.com/assets/1645482/13560869/448d85f6-e468-11e5-9c55-2bdec9555bdb.gif)
+
+Football Scores:
+![football_scores_preview](https://cloud.githubusercontent.com/assets/1645482/13560926/f98215d0-e468-11e5-9581-d4c8a1591068.gif)
+
 Android Nanodegree | Project 3: Super Duo: A project for the Android Nanodegree program which contains two functional Android applications for which UX improvements are to be made.
 
 To implement the barcode scanning functionality for the Alexandria application, the Scandit SDK library was utilized.
