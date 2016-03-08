@@ -154,30 +154,32 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
             return;
         }
 
+        // If the bookTitleString data string is not null, the bookTitle text is set.
         String bookTitleString = data.getString(data.getColumnIndex(AlexandriaContract.BookEntry.TITLE));
-        bookTitle.setText(bookTitleString);
+        if (bookTitleString != null) { bookTitle.setText(bookTitleString); }
 
+        // If the bookSubTitle data string is not null, the bookSubtitle text is set.
         String bookSubTitle = data.getString(data.getColumnIndex(AlexandriaContract.BookEntry.SUBTITLE));
-        bookSubtitle.setText(bookSubTitle);
-
-        String authors = data.getString(data.getColumnIndex(AlexandriaContract.AuthorEntry.AUTHOR));
+        if (bookSubTitle != null) { bookSubtitle.setText(bookSubTitle); }
 
         // If authors string data is not null, the authors strings is split up.
+        String authors = data.getString(data.getColumnIndex(AlexandriaContract.AuthorEntry.AUTHOR));
         if (authors != null) {
             String[] authorsArr = authors.split(",");
             authorsText.setLines(authorsArr.length);
             authorsText.setText(authors.replace(",", "\n"));
         }
 
+        // If the imgUrl string is not null, the book image is downloaded.
         String imgUrl = data.getString(data.getColumnIndex(AlexandriaContract.BookEntry.IMAGE_URL));
-
-        if (Patterns.WEB_URL.matcher(imgUrl).matches()){
+        if (imgUrl != null && Patterns.WEB_URL.matcher(imgUrl).matches()){
             new DownloadImage(bookCoverImage).execute(imgUrl);
             bookCoverImage.setVisibility(View.VISIBLE);
         }
 
+        // If the categories data string is not null, the categoriesText is set.
         String categories = data.getString(data.getColumnIndex(AlexandriaContract.CategoryEntry.CATEGORY));
-        categoriesText.setText(categories);
+        if (categories != null) { categoriesText.setText(categories); }
 
         bookContainer.setVisibility(View.VISIBLE); // Makes the book container visible.
         scanButton.setVisibility(View.GONE); // Hides the scan button.

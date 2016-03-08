@@ -132,22 +132,6 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_action_undo"
-                android:drawableStart="@drawable/ic_action_undo"
-                android:text="@string/back_button"
-                android:onClick="goBack"
-                android:id="@+id/backButton"
-                android:layout_weight="1"
-                android:background="@drawable/blue_button_background" />
-
-            <View
-                android:layout_width="8dp"
-                android:layout_height="0dp"
-                android:id="@+id/button_spacer" />
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:text="@string/delete_book"
                 android:id="@+id/delete_button"
                 android:drawableLeft="@drawable/ic_action_discard"

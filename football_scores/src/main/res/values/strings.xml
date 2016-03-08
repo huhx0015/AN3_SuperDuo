@@ -17,6 +17,7 @@
     <string name="premierleague" translatable="false">Premier League</string>
     <string name="primeradivison" translatable="false">Primera Division</string>
     <string name="seriaa" translatable="false">Serie A</string>
+    <string name="unknownleague">Unknown League - Please Report</string>
 
     <!--MATCH STRINGS-->
     <string name="matchday_text">Match Day</string>

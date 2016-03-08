@@ -128,9 +128,6 @@ public class BookDetail extends Fragment implements LoaderManager.LoaderCallback
         bookIntent.putExtra(BookService.EAN, ean);
         bookIntent.setAction(BookService.DELETE_BOOK);
         getActivity().startService(bookIntent);
-
-        // Loads the ListOfBooks fragment.
-//        ((MainActivity) getActivity()).loadFragment(new ListOfBooks());
     }
 
     /** CURSOR METHODS _________________________________________________________________________ **/
@@ -154,8 +151,9 @@ public class BookDetail extends Fragment implements LoaderManager.LoaderCallback
             return;
         }
 
+        // If the book title string data is not null, the book title text is set.
         bookTitle = data.getString(data.getColumnIndex(AlexandriaContract.BookEntry.TITLE));
-        fullBookTitle.setText(bookTitle);
+        if (bookTitle != null) { fullBookTitle.setText(bookTitle); }
 
         // Checks to see if the shareActionProvider is null or not.
         if (shareActionProvider != null) {
@@ -166,33 +164,38 @@ public class BookDetail extends Fragment implements LoaderManager.LoaderCallback
             shareActionProvider.setShareIntent(shareIntent);
         }
 
+        // If the book subtitle string data is not null, the book subtitle is set.
         String bookSubTitle = data.getString(data.getColumnIndex(AlexandriaContract.BookEntry.SUBTITLE));
-        fullBookSubTitle.setText(bookSubTitle);
+        if (bookSubTitle != null) { fullBookSubTitle.setText(bookSubTitle); }
 
+        // If the description string data is not null, the description text is set.
         String desc = data.getString(data.getColumnIndex(AlexandriaContract.BookEntry.DESC));
+        if (desc != null) {
 
-        // Limits the book description to a length of 250 characters.
-        if (desc.length() > 250) { desc = desc.substring(0, 250) + "..."; }
+            // Limits the book description to a length of 250 characters.
+            if (desc.length() > 250) { desc = desc.substring(0, 250) + "..."; }
 
-        fullBookDesc.setText(desc);
+            fullBookDesc.setText(desc);
+        }
 
+        // If authors string data is not null, the authors strings is split up.
         String authors = data.getString(data.getColumnIndex(AlexandriaContract.AuthorEntry.AUTHOR));
-        String[] authorsArr = authors.split(",");
-        authorText.setLines(authorsArr.length);
-        authorText.setText(authors.replace(",","\n"));
-        String imgUrl = data.getString(data.getColumnIndex(AlexandriaContract.BookEntry.IMAGE_URL));
+        if (authors != null) {
+            String[] authorsArr = authors.split(",");
+            authorText.setLines(authorsArr.length);
+            authorText.setText(authors.replace(",", "\n"));
+        }
 
-        if (Patterns.WEB_URL.matcher(imgUrl).matches()){
+        // If the image URL is not null, the book image is downloaded.
+        String imgUrl = data.getString(data.getColumnIndex(AlexandriaContract.BookEntry.IMAGE_URL));
+        if (imgUrl != null && Patterns.WEB_URL.matcher(imgUrl).matches()){
             new DownloadImage(fullBookCover).execute(imgUrl);
             fullBookCover.setVisibility(View.VISIBLE);
         }
 
+        // If the categories data is not null, the categories text is set.
         String categories = data.getString(data.getColumnIndex(AlexandriaContract.CategoryEntry.CATEGORY));
-        categoriesText.setText(categories);
-
-        if (rootView.findViewById(R.id.right_container) != null){
-            rootView.findViewById(R.id.backButton).setVisibility(View.INVISIBLE);
-        }
+        if (categories != null) { categoriesText.setText(categories); }
     }
 
     @Override

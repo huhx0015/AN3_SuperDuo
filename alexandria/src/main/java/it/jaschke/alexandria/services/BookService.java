@@ -72,7 +72,13 @@ public class BookService extends IntentService {
 
             Log.d(LOG_TAG, "deleteBook(): Deleting book : " + ean);
 
-            getContentResolver().delete(AlexandriaContract.BookEntry.buildBookUri(Long.parseLong(ean)), null, null);
+            // Try/catch error block for any possible invalid long number format errors.
+            try {
+                getContentResolver().delete(AlexandriaContract.BookEntry.buildBookUri(Long.parseLong(ean)), null, null);
+            } catch (NumberFormatException e) {
+                Log.e(LOG_TAG, "deleteBook(): ERROR: " + e.getMessage());
+                e.printStackTrace();
+            }
 
             // Sends a broadcast to signal the MainActivity to display the ListOfBooks fragment.
             Intent messageIntent = new Intent(MainActivity.MESSAGE_EVENT);
@@ -89,7 +95,7 @@ public class BookService extends IntentService {
 
         Log.d(LOG_TAG, "deleteBook(): Fetching book : " + ean);
 
-        if (ean.length() != 13){
+        if (ean.length() != 13) {
             return;
         }
 
