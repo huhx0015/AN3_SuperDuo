@@ -11,7 +11,7 @@ DEVELOPER: huhx0015
 
 ## Description
 
-Android Nanodegree | Project 3: Super Duo: A project for the Android Nanodegree program which contains two functional Android applications for which UX improvements are to be made.
+Android Nanodegree | Project 3: Super Duo: A project for the Android Nanodegree program which contains two functional Android applications for which UX improvements have been made.
 
 To implement the barcode scanning functionality for the Alexandria application, the Scandit SDK library was utilized.
 
